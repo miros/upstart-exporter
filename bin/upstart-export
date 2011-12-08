@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../lib/'))
+
+require 'upstart-exporter'
+require 'optparse'
+
+USAGE = "Usage: upstart-export -p PROCFILE -n APPNAME"
+options = {}
+
+OptionParser.new do |opts|
+
+  opts.on("-p", "--procfile PROCFILE", "Procfile to export") do |p|
+    options[:procfile] = p
+  end
+
+  opts.on("-n", "--appname NAME", "Application name") do |n|
+    options[:app_name] = n
+  end
+
+end.parse!
+
+abort(USAGE) unless options[:procfile] && options[:app_name]
+
+
+begin
+  Upstart::Exporter.new(options).export
+rescue Upstart::ExportError => e
+  abort(e.to_s)
+end
