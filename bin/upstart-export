@@ -3,6 +3,8 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../lib/'))
 
 require 'upstart-exporter'
 require 'optparse'
+require 'fileutils'
+require 'yaml'
 
 USAGE = "Usage: upstart-export -p PROCFILE -n APPNAME"
 options = {}
