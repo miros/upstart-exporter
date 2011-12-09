@@ -6,7 +6,7 @@ require 'optparse'
 require 'fileutils'
 require 'yaml'
 
-USAGE = "Usage: upstart-export -p PROCFILE -n APPNAME"
+USAGE = "Usage: upstart-export -p PROCFILE -n APPNAME\nor upstart-export -c -n APPNAME "
 options = {}
 
 OptionParser.new do |opts|
@@ -19,13 +19,20 @@ OptionParser.new do |opts|
     options[:app_name] = n
   end
 
+  opts.on("-c", "--clear", "Remove application scripts") do |n|
+    options[:clear] = true
+  end
 end.parse!
 
-abort(USAGE) unless options[:procfile] && options[:app_name]
+abort(USAGE) if !options[:app_name] || (!options[:procfile] && !options[:clear]) || (options[:procfile] && options[:clear])
 
 
 begin
-  Upstart::Exporter.new(options).export
+  if options[:clear]
+    Upstart::Exporter.new(options).clear
+  else
+    Upstart::Exporter.new(options).export
+  end
 rescue Upstart::ExportError => e
   abort(e.to_s)
 end

@@ -40,24 +40,29 @@ module Upstart
     end
 
     def process_opts(options)
-      process_procfile(options[:procfile])
+      @commands = if options[:clear]
+        {}
+      else
+        process_procfile(options[:procfile])
+      end
       process_appname(options[:app_name])
     end
 
     def process_procfile(name)
       error "#{name} is not a readable file" unless FileTest.file?(name)
-      @commands = {}
+      commands = {}
       content = File.read(name)
       content.lines.each do |line|
         line.chomp!
         if line =~ /^(\w+?):(.*)$/
           label = $1
           command = $2
-          @commands[label] = command
+          commands[label] = command
         else
           error "procfile lines should have the following format: 'some_label: command'"
         end
       end
+      commands
     end
 
     def process_appname(app_name)
