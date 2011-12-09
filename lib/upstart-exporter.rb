@@ -68,14 +68,6 @@ module Upstart
     def check_dir(dir)
       FileUtils.mkdir_p(dir) unless FileTest.directory?(dir)
       error "Path #{dir} does not exist" unless FileTest.directory?(dir)
-      elements = [''] + dir.split('/').select{|el| !el.empty?}
-      path = ''
-      elements.each do |el|
-        path += (el + '/')
-        if FileTest.world_writable?(path)
-          error "Path #{path} (in #{dir}) is writable by others"
-        end
-      end
     end
 
     def export
