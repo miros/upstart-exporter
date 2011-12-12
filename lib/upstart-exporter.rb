@@ -110,7 +110,7 @@ start on starting %s
 stop on stopping %s
 respawn
 
-exec su - %s -c '/bin/sh %s >> /var/log/%s/%s.log 2>&1'
+exec sudo -u www /bin/sh %s >> /var/log/%s/%s.log 2>&1
 HEREDOC
 
     def upstart_conf
