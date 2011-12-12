@@ -92,8 +92,8 @@ HEREDOC
 pre-start script
 
 bash << "EOF"
-  mkdir -p /var/log/%s
-  chown -R %s /var/log/%s
+  mkdir -p /var/log/fb-%s
+  chown -R %s /var/log/fb-%s
 EOF
 
 end script
@@ -110,7 +110,7 @@ start on starting %s
 stop on stopping %s
 respawn
 
-exec sudo -u www /bin/sh %s >> /var/log/%s/%s.log 2>&1
+exec sudo -u %s /bin/sh %s >> /var/log/fb-%s/%s.log 2>&1
 HEREDOC
 
     def upstart_conf
