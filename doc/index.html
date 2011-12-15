@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Gem for exporting user-scripts as Upstart scripts</h1>
+
+<h2>Purpose</h2>
+
+<p>It is often neccessary to run some supporting background tasks for rails projects alongside with the webserver. One of the solutions is use of Foreman gem, which allows to export tasks as Upstart scripts. This solution is dangerous,because it requires root priveleges for foreman executable (in order to add scripts to /etc/init), so it the depoloing user to run any code as root (by placing appropriate script into /etc/init).</p>
+
+<p>This gem is an attempt to provide a safe way for installing backround jobs, so that they run under some fixed user wwithout root priveleges.</p>
+
+<p>The only interface to the gem is the script it provides.</p>
+
+<h2>Installing</h2>
+
+<pre class="code"><span class='rubyid_gem identifier id'>gem</span> <span class='rubyid_install identifier id'>install</span> <span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_exporter identifier id'>exporter</span>
+</pre>
+
+<h2>Configuration</h2>
+
+<p>The export process is configured through the only config, /etc/upstart-exporter.yaml, which is a simple YAML file of the following format:</p>
+
+<pre class="code"><span class='minus op'>-</span><span class='minus op'>-</span><span class='minus op'>-</span>
+<span class='rubyid_run_user identifier id'>run_user</span><span class='colon op'>:</span> <span class='rubyid_www identifier id'>www</span> <span class='comment val'># The user under which all installed through upstart-exporter background jobs are run </span>
+<span class='rubyid_helper_dir identifier id'>helper_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_helper_dir identifier id'>helper_dir</span> <span class='comment val'># Auxilary directory for scripts incapsulating background jobs</span>
+<span class='rubyid_upstart_dir identifier id'>upstart_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_upstart_dir identifier id'>upstart_dir</span> <span class='comment val'># Directory where upstart scripts should be placed</span>
+</pre>
+
+<p>The config is not installed by default. If this config is absent, the default values are the following:</p>
+
+<pre class="code"><span class='rubyid_helper_dir identifier id'>helper_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_local identifier id'>local</span><span class='div op'>/</span><span class='rubyid_upstart_helpers identifier id'>upstart_helpers</span><span class='div op'>/</span>
+<span class='rubyid_upstart_dir identifier id'>upstart_dir</span><span class='colon op'>:</span> <span class='regexp val'>/etc/i</span><span class='rubyid_nit identifier id'>nit</span><span class='div op'>/</span>
+<span class='rubyid_run_user identifier id'>run_user</span><span class='colon op'>:</span> <span class='rubyid_service identifier id'>service</span>
+</pre>
+
+<p>To give a user (i.e. deployuser) ability to use this script, one can place </p>
+
+<pre class="code"><span class='comment val'># Commands required for manipulating jobs</span>
+<span class='rubyid_Cmnd_Alias constant id'>Cmnd_Alias</span> <span class='rubyid_UPSTART constant id'>UPSTART</span> <span class='assign token'>=</span> <span class='regexp val'>/sbin/s</span><span class='rubyid_tart identifier id'>tart</span><span class='comma token'>,</span> <span class='regexp val'>/sbin/s</span><span class='rubyid_top identifier id'>top</span><span class='comma token'>,</span> <span class='regexp val'>/sbin/</span><span class='rubyid_restart identifier id'>restart</span>
+<span class='rubyid_Cmnd_Alias constant id'>Cmnd_Alias</span> <span class='rubyid_UPEXPORT constant id'>UPEXPORT</span> <span class='assign token'>=</span> <span class='regexp val'>/usr/</span><span class='rubyid_local identifier id'>local</span><span class='div op'>/</span><span class='rubyid_bin identifier id'>bin</span><span class='div op'>/</span><span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_export identifier id'>export</span>
+
+<span class='dot3 op'>...</span>
+
+<span class='comment val'># Add gem's binary path to this</span>
+<span class='rubyid_Defaults constant id'>Defaults</span>    <span class='rubyid_secure_path identifier id'>secure_path</span> <span class='assign token'>=</span> <span class='regexp val'>/sbin:/</span><span class='rubyid_bin identifier id'>bin</span><span class='symbol val'>:/</span><span class='rubyid_usr identifier id'>usr</span><span class='div op'>/</span><span class='rubyid_sbin identifier id'>sbin</span><span class='symbol val'>:/</span><span class='rubyid_usr identifier id'>usr</span><span class='div op'>/</span><span class='rubyid_bin identifier id'>bin</span><span class='symbol val'>:/</span><span class='rubyid_usr identifier id'>usr</span><span class='div op'>/</span><span class='rubyid_local identifier id'>local</span><span class='div op'>/</span><span class='rubyid_bin identifier id'>bin</span>
+
+<span class='dot3 op'>...</span>
+
+<span class='comment val'># Allow deploy user to manipulate jobs </span>
+<span class='rubyid_deployuser identifier id'>deployuser</span>        <span class='rubyid_ALL constant id'>ALL</span><span class='assign token'>=</span><span class='lparen token'>(</span><span class='rubyid_deployuser identifier id'>deployuser</span><span class='rparen token'>)</span> <span class='rubyid_NOPASSWD constant id'>NOPASSWD</span><span class='colon op'>:</span> <span class='rubyid_ALL constant id'>ALL</span><span class='comma token'>,</span> <span class='lparen token'>(</span><span class='rubyid_root identifier id'>root</span><span class='rparen token'>)</span> <span class='rubyid_NOPASSWD constant id'>NOPASSWD</span><span class='colon op'>:</span> <span class='rubyid_UPSTART constant id'>UPSTART</span><span class='comma token'>,</span> <span class='rubyid_UPEXPORT constant id'>UPEXPORT</span>
+</pre>
+
+<h2>Usage</h2>
+
+<p>After upstart-exporter is installed and configured, one may export background jobs from an arbitrary Procfile-like file of the following format:</p>
+
+<pre class="code"><span class='rubyid_cmdlabel1 identifier id'>cmdlabel1</span><span class='colon op'>:</span> <span class='rubyid_cmd1 identifier id'>cmd1</span>
+<span class='rubyid_cmdlabel2 identifier id'>cmdlabel2</span><span class='colon op'>:</span> <span class='rubyid_cmd2 identifier id'>cmd2</span>
+</pre>
+
+<p>i.e. a file ./myprocfile containing:</p>
+
+<pre class="code"><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span><span class='colon op'>:</span> <span class='regexp val'>/usr/</span><span class='rubyid_bin identifier id'>bin</span><span class='div op'>/</span><span class='rubyid_tail identifier id'>tail</span> <span class='minus op'>-</span><span class='rubyid_F constant id'>F</span> <span class='regexp val'>/var/</span><span class='rubyid_log identifier id'>log</span><span class='div op'>/</span><span class='rubyid_messages identifier id'>messages</span>
+<span class='rubyid_my_another_tail_cmd identifier id'>my_another_tail_cmd</span><span class='colon op'>:</span> <span class='regexp val'>/usr/</span><span class='rubyid_bin identifier id'>bin</span><span class='div op'>/</span><span class='rubyid_tail identifier id'>tail</span> <span class='minus op'>-</span><span class='rubyid_F constant id'>F</span> <span class='regexp val'>/var/</span><span class='rubyid_log identifier id'>log</span><span class='div op'>/</span><span class='rubyid_messages identifier id'>messages</span>
+</pre>
+
+<p>For security purposes, command labels are allowed to contain only letters, digits and underscores.</p>
+
+<p>To export this file one should run</p>
+
+<pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_export identifier id'>export</span> <span class='minus op'>-</span><span class='rubyid_p identifier id'>p</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='rubyid_myprocfile identifier id'>myprocfile</span> <span class='minus op'>-</span><span class='rubyid_n identifier id'>n</span> <span class='rubyid_myapp identifier id'>myapp</span>
+</pre>
+
+<p>-hore myapp is the application name. This name only affects the names of generated files. For security purposes, app name is also allowed to contain only letters, digits and underscores. Assuming that default options are used, the following files and folders will be generated:</p>
+
+<p>in /etc/init/:
+    fb-myapp-my<em>another</em>tail<em>cmd-real.conf
+    fb-myapp-my</em>another<em>tail</em>cmd.conf
+    fb-myapp-my<em>tail</em>cmd-real.conf
+    fb-myapp-my<em>tail</em>cmd.conf
+    fb-myapp.conf</p>
+
+<p>in /var/local/upstart_helpers:</p>
+
+<pre class="code"><span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_another_tail_cmd identifier id'>my_another_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_sh identifier id'>sh</span>
+<span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_sh identifier id'>sh</span>
+</pre>
+
+<p>Prefix fb- is added to avoid collisions with other upstart jobs. After this my_tail_cmd, for example, will be able to be started as an upstart script:</p>
+
+<pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_start identifier id'>start</span> <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span>
+
+<span class='dot2 op'>..</span>
+
+<span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_stop identifier id'>stop</span> <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span>
+</pre>
+
+<p>It&#39;s stdout/stderr will be redirected to /var/log/fb-myapp/my_tail_cmd.log.   </p>
+
+<p>To start/stop all application commands at once, one can run:</p>
+
+<pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_start identifier id'>start</span> <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span>
+<span class='dot3 op'>...</span>
+<span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_stop identifier id'>stop</span> <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span>
+</pre>
+
+<p>To remove upstart scripts and helpers for a particular application one can run</p>
+
+<pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_export identifier id'>export</span> <span class='minus op'>-</span><span class='rubyid_c identifier id'>c</span> <span class='minus op'>-</span><span class='rubyid_n identifier id'>n</span> <span class='rubyid_myapp identifier id'>myapp</span>
+</pre>
+
+<p>The logs will not be cleared. </p>
+</div></div>
+    
+    <div id="footer">
+  Generated on Thu Dec 15 17:00:57 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.4 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>
