@@ -58,11 +58,11 @@
 
 <h2>Purpose</h2>
 
-<p>It is often neccessary to run some supporting background tasks for rails projects alongside with the webserver. One of the solutions is use of Foreman gem, which allows to export tasks as Upstart scripts. This solution is dangerous,because it requires root priveleges for foreman executable (in order to add scripts to /etc/init), so it the depoloing user to run any code as root (by placing appropriate script into /etc/init).</p>
+<p>It is often neccessary to run some supporting background tasks for rails projects alongside with the webserver. One of the solutions is use of Foreman gem, which allows to export tasks as Upstart scripts. This solution is dangerous, because it requires root priveleges for foreman executable (in order to add scripts to /etc/init), so it allows the exporting user to run any code as root (by placing appropriate script into /etc/init).</p>
 
-<p>This gem is an attempt to provide a safe way for installing backround jobs, so that they run under some fixed user wwithout root priveleges.</p>
+<p>This gem is an attempt to provide a safe way for installing backround jobs, so that they run under some fixed user without root priveleges.</p>
 
-<p>The only interface to the gem is the script it provides.</p>
+<p>The only interface to the gem that should be used is the script(<em>upstart-export</em>) it provides.</p>
 
 <h2>Installing</h2>
 
@@ -86,7 +86,7 @@
 <span class='rubyid_run_user identifier id'>run_user</span><span class='colon op'>:</span> <span class='rubyid_service identifier id'>service</span>
 </pre>
 
-<p>To give a user (i.e. deployuser) ability to use this script, one can place </p>
+<p>To give a certain user (i.e. deployuser) ability to use this script, one can place the following lines into sudoers file:</p>
 
 <pre class="code"><span class='comment val'># Commands required for manipulating jobs</span>
 <span class='rubyid_Cmnd_Alias constant id'>Cmnd_Alias</span> <span class='rubyid_UPSTART constant id'>UPSTART</span> <span class='assign token'>=</span> <span class='regexp val'>/sbin/s</span><span class='rubyid_tart identifier id'>tart</span><span class='comma token'>,</span> <span class='regexp val'>/sbin/s</span><span class='rubyid_top identifier id'>top</span><span class='comma token'>,</span> <span class='regexp val'>/sbin/</span><span class='rubyid_restart identifier id'>restart</span>
@@ -124,16 +124,16 @@
 <pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_export identifier id'>export</span> <span class='minus op'>-</span><span class='rubyid_p identifier id'>p</span> <span class='dot token'>.</span><span class='div op'>/</span><span class='rubyid_myprocfile identifier id'>myprocfile</span> <span class='minus op'>-</span><span class='rubyid_n identifier id'>n</span> <span class='rubyid_myapp identifier id'>myapp</span>
 </pre>
 
-<p>-hore myapp is the application name. This name only affects the names of generated files. For security purposes, app name is also allowed to contain only letters, digits and underscores. Assuming that default options are used, the following files and folders will be generated:</p>
+<p>where <em>myapp</em> is the application name. This name only affects the names of generated files. For security purposes, app name is also allowed to contain only letters, digits and underscores. Assuming that default options are used, the following files and folders will be generated:</p>
 
-<p>in /etc/init/:
-    fb-myapp-my<em>another</em>tail<em>cmd-real.conf
-    fb-myapp-my</em>another<em>tail</em>cmd.conf
-    fb-myapp-my<em>tail</em>cmd-real.conf
-    fb-myapp-my<em>tail</em>cmd.conf
-    fb-myapp.conf</p>
+<p>in /etc/init/:</p>
 
-<p>in /var/local/upstart_helpers:</p>
+<pre class="code"><span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_another_tail_cmd identifier id'>my_another_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_conf identifier id'>conf</span>
+<span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_conf identifier id'>conf</span>
+<span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='dot token'>.</span><span class='rubyid_conf identifier id'>conf</span>
+</pre>
+
+<p>in /var/local/upstart_helpers/:</p>
 
 <pre class="code"><span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_another_tail_cmd identifier id'>my_another_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_sh identifier id'>sh</span>
 <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_sh identifier id'>sh</span>
@@ -162,11 +162,11 @@
 <pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_upstart identifier id'>upstart</span><span class='minus op'>-</span><span class='rubyid_export identifier id'>export</span> <span class='minus op'>-</span><span class='rubyid_c identifier id'>c</span> <span class='minus op'>-</span><span class='rubyid_n identifier id'>n</span> <span class='rubyid_myapp identifier id'>myapp</span>
 </pre>
 
-<p>The logs will not be cleared. </p>
+<p>The logs are not cleared in this case. Also, all old application scripts are cleared before each export.</p>
 </div></div>
     
     <div id="footer">
-  Generated on Thu Dec 15 17:00:57 2011 by 
+  Generated on Thu Dec 22 20:18:30 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.8.7).
 </div>

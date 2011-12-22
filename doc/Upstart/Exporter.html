@@ -83,86 +83,66 @@
     
   
     
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="Exporter/Errors.html" title="Upstart::Exporter::Errors (module)">Errors</a></span></dd>
+      
+    
   
   
   
-    <dt class="r2 last">Defined in:</dt>
-    <dd class="r2 last">lib/upstart-exporter.rb<span class="defines">,<br />
-  lib/upstart-exporter/version.rb</span>
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/upstart-exporter.rb<span class="defines">,<br />
+  lib/upstart-exporter/version.rb,<br /> lib/upstart-exporter/templates.rb</span>
 </dd>
   
 </dl>
 <div class="clear"></div>
 
+<h2>Defined Under Namespace</h2>
+<p class="children">
+   
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Exporter/Errors.html" title="Upstart::Exporter::Errors (module)">Errors</a></span>, <span class='object_link'><a href="Exporter/Options.html" title="Upstart::Exporter::Options (module)">Options</a></span>
+    
+   
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Exporter/Error.html" title="Upstart::Exporter::Error (class)">Error</a></span>, <span class='object_link'><a href="Exporter/Templates.html" title="Upstart::Exporter::Templates (class)">Templates</a></span>
+    
+  
+</p>
 
   <h2>Constant Summary</h2>
   
     <dl class="constants">
       
-        <dt id="DEFAULTS-constant" class="">DEFAULTS =
-          
-        </dt>
-        <dd><pre class="code"><span class='lbrace token'>{</span>
-  <span class='string val'>'helper_dir'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'/var/local/upstart_helpers/'</span><span class='comma token'>,</span>
-  <span class='string val'>'upstart_dir'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'/etc/init/'</span><span class='comma token'>,</span>
-  <span class='string val'>'run_user'</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'service'</span>
-<span class='rbrace token'>}</span>
-</pre></dd>
-      
-        <dt id="CONF-constant" class="">CONF =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>'/etc/upstart-exporter.yaml'</span>
-</pre></dd>
-      
-        <dt id="HELPER_TPL-constant" class="">HELPER_TPL =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>&quot;#!/bin/sh\n%s\n&quot;</span>
-</pre></dd>
-      
-        <dt id="APP_TPL-constant" class="">APP_TPL =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>&quot;pre-start script\n\nbash &lt;&lt; \&quot;EOF\&quot;\nmkdir -p /var/log/%s\nchown -R %s /var/log/%s\nEOF\n\nend script\n&quot;</span>
-</pre></dd>
-      
-        <dt id="COMMAND_TPL-constant" class="">COMMAND_TPL =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>&quot;start on starting %s\nstop on stopping %s\n&quot;</span>
-</pre></dd>
-      
-        <dt id="COMMAND_REAL_TPL-constant" class="">COMMAND_REAL_TPL =
-          
-        </dt>
-        <dd><pre class="code"><span class='string val'>&quot;start on starting %s\nstop on stopping %s\nrespawn\n\nexec sudo -u %s /bin/sh %s &gt;&gt; /var/log/%s/%s.log 2&gt;&amp;1\n&quot;</span>
-</pre></dd>
-      
         <dt id="VERSION-constant" class="">VERSION =
           
         </dt>
-        <dd><pre class="code"><span class='string val'>&quot;0.0.4&quot;</span>
+        <dd><pre class="code"><span class='string val'>&quot;0.1.0&quot;</span>
 </pre></dd>
       
     </dl>
   
 
 
+  
+  
+  
+  
   <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
   <ul class="summary">
     
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#helper_dir-instance_method" title="#helper_dir (instance method)">- (Object) <strong>helper_dir</strong> </a>
+      <a href="#options-instance_method" title="#options (instance method)">- (Object) <strong>options</strong> </a>
     
 
     
   </span>
   
   
-    
+    <span class="note title readonly">readonly</span>
     
   
   
@@ -172,61 +152,7 @@
 
   
     <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute helper_dir.
-</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#run_user-instance_method" title="#run_user (instance method)">- (Object) <strong>run_user</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute run_user.
-</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#upstart_dir-instance_method" title="#upstart_dir (instance method)">- (Object) <strong>upstart_dir</strong> </a>
-    
-
-    
-  </span>
-  
-  
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>
-Returns the value of attribute upstart_dir.
+Returns the value of attribute options.
 </p>
 </div></span>
   
@@ -237,6 +163,9 @@ Returns the value of attribute upstart_dir.
 
 
 
+  
+  
+  
 
   
     <h2>
@@ -249,70 +178,7 @@ Returns the value of attribute upstart_dir.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#app_cmd-instance_method" title="#app_cmd (instance method)">- (Object) <strong>app_cmd</strong>(cmd_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#check_dir-instance_method" title="#check_dir (instance method)">- (Object) <strong>check_dir</strong>(dir) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#clear-instance_method" title="#clear (instance method)">- (Object) <strong>clear</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#error-instance_method" title="#error (instance method)">- (Object) <strong>error</strong>(msg) </a>
     
 
     
@@ -354,112 +220,7 @@ Returns the value of attribute upstart_dir.
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#export_app-instance_method" title="#export_app (instance method)">- (Object) <strong>export_app</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#export_cmd_helper-instance_method" title="#export_cmd_helper (instance method)">- (Object) <strong>export_cmd_helper</strong>(cmd_name, cmd) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#export_cmd_upstart_confs-instance_method" title="#export_cmd_upstart_confs (instance method)">- (Object) <strong>export_cmd_upstart_confs</strong>(cmd_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#export_command-instance_method" title="#export_command (instance method)">- (Object) <strong>export_command</strong>(cmd_name, cmd) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#helper_cmd_conf-instance_method" title="#helper_cmd_conf (instance method)">- (Object) <strong>helper_cmd_conf</strong>(cmd_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Exporter) <strong>initialize</strong>(options) </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Exporter) <strong>initialize</strong>(command_line_args) </a>
     
 
     
@@ -482,142 +243,26 @@ A new instance of Exporter.
 </li>
 
       
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#process_appname-instance_method" title="#process_appname (instance method)">- (Object) <strong>process_appname</strong>(app_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#process_opts-instance_method" title="#process_opts (instance method)">- (Object) <strong>process_opts</strong>(options) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#process_procfile-instance_method" title="#process_procfile (instance method)">- (Object) <strong>process_procfile</strong>(name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#read_global_opts-instance_method" title="#read_global_opts (instance method)">- (Object) <strong>read_global_opts</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#upstart_cmd_conf-instance_method" title="#upstart_cmd_conf (instance method)">- (Object) <strong>upstart_cmd_conf</strong>(cmd_name) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#upstart_conf-instance_method" title="#upstart_conf (instance method)">- (Object) <strong>upstart_conf</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Exporter/Errors.html" title="Upstart::Exporter::Errors (module)">Errors</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Exporter/Errors.html#error-instance_method" title="Upstart::Exporter::Errors#error (method)">#error</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <p class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Upstart::Exporter (class)">Exporter</a></span></tt>) <strong>initialize</strong>(options) 
+    - (<tt><span class='object_link'><a href="" title="Upstart::Exporter (class)">Exporter</a></span></tt>) <strong>initialize</strong>(command_line_args) 
   
 
   
@@ -639,21 +284,21 @@ A new instance of Exporter
       <pre class="lines">
 
 
+13
+14
+15
 16
 17
-18
-19
-20
-21</pre>
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 13</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
-  <span class='rubyid_process_opts identifier id'>process_opts</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
-  <span class='rubyid_read_global_opts identifier id'>read_global_opts</span>
-  <span class='rubyid_check_dir identifier id'>check_dir</span><span class='lparen token'>(</span><span class='rubyid_@helper_dir ivar id'>@helper_dir</span><span class='rparen token'>)</span>
-  <span class='rubyid_check_dir identifier id'>check_dir</span><span class='lparen token'>(</span><span class='rubyid_@upstart_dir ivar id'>@upstart_dir</span><span class='rparen token'>)</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_initialize identifier id'>initialize</span><span class='lparen token'>(</span><span class='rubyid_command_line_args identifier id'>command_line_args</span><span class='rparen token'>)</span>
+  <span class='rubyid_global_options identifier id'>global_options</span> <span class='assign token'>=</span> <span class='rubyid_Options constant id'>Options</span><span class='colon2 op'>::</span><span class='rubyid_Global constant id'>Global</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span>
+  <span class='rubyid_command_line_options identifier id'>command_line_options</span> <span class='assign token'>=</span> <span class='rubyid_Options constant id'>Options</span><span class='colon2 op'>::</span><span class='rubyid_CommandLine constant id'>CommandLine</span><span class='dot token'>.</span><span class='rubyid_new identifier id'>new</span><span class='lparen token'>(</span><span class='rubyid_command_line_args identifier id'>command_line_args</span><span class='rparen token'>)</span>
+  <span class='rubyid_@options ivar id'>@options</span> <span class='assign token'>=</span> <span class='rubyid_global_options identifier id'>global_options</span><span class='dot token'>.</span><span class='rubyid_merge identifier id'>merge</span><span class='lparen token'>(</span><span class='rubyid_command_line_options identifier id'>command_line_options</span><span class='rparen token'>)</span>
+  <span class='rubyid_ensure_dirs identifier id'>ensure_dirs</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -667,19 +312,19 @@ A new instance of Exporter
     <h2>Instance Attribute Details</h2>
     
       
-      <span id="helper_dir=-instance_method"></span>
-      <span id="helper_dir-instance_method"></span>
+      <span id=""></span>
+      <span id="options-instance_method"></span>
       <div class="method_details first">
-  <p class="signature first" id="helper_dir-instance_method">
+  <p class="signature first" id="options-instance_method">
   
-    - (<tt>Object</tt>) <strong>helper_dir</strong> 
+    - (<tt>Object</tt>) <strong>options</strong>  <span class="extras">(readonly)</span>
   
 
   
 </p><div class="docstring">
   <div class="discussion">
     <p>
-Returns the value of attribute helper_dir
+Returns the value of attribute options
 </p>
 
 
@@ -694,103 +339,15 @@ Returns the value of attribute helper_dir
       <pre class="lines">
 
 
-14
-15
-16</pre>
+11
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 11</span>
 
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_helper_dir identifier id'>helper_dir</span>
-  <span class='rubyid_@helper_dir ivar id'>@helper_dir</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id="run_user=-instance_method"></span>
-      <span id="run_user-instance_method"></span>
-      <div class="method_details ">
-  <p class="signature " id="run_user-instance_method">
-  
-    - (<tt>Object</tt>) <strong>run_user</strong> 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Returns the value of attribute run_user
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-14
-15
-16</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 14</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_run_user identifier id'>run_user</span>
-  <span class='rubyid_@run_user ivar id'>@run_user</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id="upstart_dir=-instance_method"></span>
-      <span id="upstart_dir-instance_method"></span>
-      <div class="method_details ">
-  <p class="signature " id="upstart_dir-instance_method">
-  
-    - (<tt>Object</tt>) <strong>upstart_dir</strong> 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    <p>
-Returns the value of attribute upstart_dir
-</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-14
-15
-16</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 14</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_upstart_dir identifier id'>upstart_dir</span>
-  <span class='rubyid_@upstart_dir ivar id'>@upstart_dir</span>
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_options identifier id'>options</span>
+  <span class='rubyid_@options ivar id'>@options</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -806,67 +363,7 @@ Returns the value of attribute upstart_dir
     
     
       <div class="method_details first">
-  <p class="signature first" id="app_cmd-instance_method">
-  
-    - (<tt>Object</tt>) <strong>app_cmd</strong>(cmd_name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-126
-127
-128</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 126</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_app_cmd identifier id'>app_cmd</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span>
-  <span class='dstring node'>&quot;#{@app_name}-#{cmd_name}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="check_dir-instance_method">
-  
-    - (<tt>Object</tt>) <strong>check_dir</strong>(dir) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-75
-76
-77
-78</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 75</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_check_dir identifier id'>check_dir</span><span class='lparen token'>(</span><span class='rubyid_dir identifier id'>dir</span><span class='rparen token'>)</span>
-  <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_mkdir_p identifier id'>mkdir_p</span><span class='lparen token'>(</span><span class='rubyid_dir identifier id'>dir</span><span class='rparen token'>)</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_FileTest constant id'>FileTest</span><span class='dot token'>.</span><span class='rubyid_directory? fid id'>directory?</span><span class='lparen token'>(</span><span class='rubyid_dir identifier id'>dir</span><span class='rparen token'>)</span>
-  <span class='rubyid_error identifier id'>error</span> <span class='dstring node'>&quot;Path #{dir} does not exist&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_FileTest constant id'>FileTest</span><span class='dot token'>.</span><span class='rubyid_directory? fid id'>directory?</span><span class='lparen token'>(</span><span class='rubyid_dir identifier id'>dir</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="clear-instance_method">
+  <p class="signature first" id="clear-instance_method">
   
     - (<tt>Object</tt>) <strong>clear</strong> 
   
@@ -878,18 +375,18 @@ Returns the value of attribute upstart_dir
       <pre class="lines">
 
 
-138
-139
-140
-141
-142
-143
-144
-145
-146</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 28</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_clear identifier id'>clear</span>
   <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_rm identifier id'>rm</span><span class='lparen token'>(</span><span class='rubyid_upstart_conf identifier id'>upstart_conf</span><span class='rparen token'>)</span> <span class='rubyid_if if_mod kw'>if</span> <span class='rubyid_FileTest constant id'>FileTest</span><span class='dot token'>.</span><span class='rubyid_file? fid id'>file?</span><span class='lparen token'>(</span><span class='rubyid_upstart_conf identifier id'>upstart_conf</span><span class='rparen token'>)</span>
@@ -899,57 +396,6 @@ Returns the value of attribute upstart_dir
   <span class='rubyid_Dir constant id'>Dir</span><span class='lbrack token'>[</span><span class='rubyid_helper_cmd_conf identifier id'>helper_cmd_conf</span><span class='lparen token'>(</span><span class='string val'>'*'</span><span class='rparen token'>)</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
     <span class='rubyid_FileUtils constant id'>FileUtils</span><span class='dot token'>.</span><span class='rubyid_rm identifier id'>rm</span><span class='lparen token'>(</span><span class='rubyid_f identifier id'>f</span><span class='rparen token'>)</span>
   <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="error-instance_method">
-  
-    - (<tt>Object</tt>) <strong>error</strong>(msg) 
-  
-
-  
-</p><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<h3>Raises:</h3>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="ExportError.html" title="Upstart::ExportError (class)">Upstart::ExportError</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-179
-180
-181</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 179</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_error identifier id'>error</span><span class='lparen token'>(</span><span class='rubyid_msg identifier id'>msg</span><span class='rparen token'>)</span>
-  <span class='rubyid_raise identifier id'>raise</span> <span class='rubyid_Upstart constant id'>Upstart</span><span class='colon2 op'>::</span><span class='rubyid_ExportError constant id'>ExportError</span><span class='comma token'>,</span> <span class='rubyid_msg identifier id'>msg</span> 
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -970,442 +416,23 @@ Returns the value of attribute upstart_dir
       <pre class="lines">
 
 
-80
-81
-82
-83
-84
-85
-86</pre>
+20
+21
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 20</span>
 
 <span class='rubyid_def def kw'>def</span> <span class='rubyid_export identifier id'>export</span>
   <span class='rubyid_clear identifier id'>clear</span>
   <span class='rubyid_export_app identifier id'>export_app</span>
-  <span class='rubyid_@commands ivar id'>@commands</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='bitor op'>|</span>
+  <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:commands</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='bitor op'>|</span>
     <span class='rubyid_export_command identifier id'>export_command</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='rparen token'>)</span>
   <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="export_app-instance_method">
-  
-    - (<tt>Object</tt>) <strong>export_app</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-148
-149
-150
-151
-152
-153</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 148</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_export_app identifier id'>export_app</span>
-  <span class='rubyid_app_conf identifier id'>app_conf</span> <span class='assign token'>=</span> <span class='rubyid_APP_TPL constant id'>APP_TPL</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='rubyid_@app_name ivar id'>@app_name</span><span class='comma token'>,</span> <span class='rubyid_@run_user ivar id'>@run_user</span><span class='comma token'>,</span> <span class='rubyid_@app_name ivar id'>@app_name</span><span class='rbrack token'>]</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_upstart_conf identifier id'>upstart_conf</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_app_conf identifier id'>app_conf</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="export_cmd_helper-instance_method">
-  
-    - (<tt>Object</tt>) <strong>export_cmd_helper</strong>(cmd_name, cmd) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-155
-156
-157
-158
-159
-160</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 155</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_export_cmd_helper identifier id'>export_cmd_helper</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='rparen token'>)</span>
-  <span class='rubyid_helper_script_cont identifier id'>helper_script_cont</span> <span class='assign token'>=</span> <span class='rubyid_HELPER_TPL constant id'>HELPER_TPL</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='rubyid_cmd identifier id'>cmd</span><span class='rbrack token'>]</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_helper_cmd_conf identifier id'>helper_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_helper_script_cont identifier id'>helper_script_cont</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="export_cmd_upstart_confs-instance_method">
-  
-    - (<tt>Object</tt>) <strong>export_cmd_upstart_confs</strong>(cmd_name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 162</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_export_cmd_upstart_confs identifier id'>export_cmd_upstart_confs</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_cmd_upstart_conf_content identifier id'>cmd_upstart_conf_content</span> <span class='assign token'>=</span> <span class='rubyid_COMMAND_TPL constant id'>COMMAND_TPL</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='rubyid_@app_name ivar id'>@app_name</span><span class='comma token'>,</span> <span class='rubyid_@app_name ivar id'>@app_name</span><span class='rbrack token'>]</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_upstart_cmd_conf identifier id'>upstart_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_cmd_upstart_conf_content identifier id'>cmd_upstart_conf_content</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  
-  <span class='rubyid_cmd_upstart_conf_content_real identifier id'>cmd_upstart_conf_content_real</span> <span class='assign token'>=</span> <span class='rubyid_COMMAND_REAL_TPL constant id'>COMMAND_REAL_TPL</span> <span class='mod op'>%</span> <span class='lbrack token'>[</span><span class='rubyid_app_cmd identifier id'>app_cmd</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_app_cmd identifier id'>app_cmd</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_@run_user ivar id'>@run_user</span><span class='comma token'>,</span> <span class='rubyid_helper_cmd_conf identifier id'>helper_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='rubyid_@app_name ivar id'>@app_name</span><span class='comma token'>,</span> <span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rbrack token'>]</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_open identifier id'>open</span><span class='lparen token'>(</span><span class='rubyid_upstart_cmd_conf identifier id'>upstart_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span> <span class='plus op'>+</span> <span class='string val'>'-real'</span><span class='rparen token'>)</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_f identifier id'>f</span><span class='bitor op'>|</span>
-    <span class='rubyid_f identifier id'>f</span><span class='dot token'>.</span><span class='rubyid_write identifier id'>write</span><span class='lparen token'>(</span><span class='rubyid_cmd_upstart_conf_content_real identifier id'>cmd_upstart_conf_content_real</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="export_command-instance_method">
-  
-    - (<tt>Object</tt>) <strong>export_command</strong>(cmd_name, cmd) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-174
-175
-176
-177</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 174</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_export_command identifier id'>export_command</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='rparen token'>)</span>
-  <span class='rubyid_export_cmd_helper identifier id'>export_cmd_helper</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='comma token'>,</span> <span class='rubyid_cmd identifier id'>cmd</span><span class='rparen token'>)</span>
-  <span class='rubyid_export_cmd_upstart_confs identifier id'>export_cmd_upstart_confs</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="helper_cmd_conf-instance_method">
-  
-    - (<tt>Object</tt>) <strong>helper_cmd_conf</strong>(cmd_name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-134
-135
-136</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 134</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_helper_cmd_conf identifier id'>helper_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='rubyid_@helper_dir ivar id'>@helper_dir</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{app_cmd(cmd_name)}.sh&quot;</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="process_appname-instance_method">
-  
-    - (<tt>Object</tt>) <strong>process_appname</strong>(app_name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-70
-71
-72
-73</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 70</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_process_appname identifier id'>process_appname</span><span class='lparen token'>(</span><span class='rubyid_app_name identifier id'>app_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_error identifier id'>error</span> <span class='dstring node'>&quot;Application name should contain only letters (and underscore) and be nonempty, so #{app_name.inspect} is not suitable&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_app_name identifier id'>app_name</span> <span class='match op'>=~</span> <span class='regexp val'>/^\w+$/</span> 
-  <span class='rubyid_@app_name ivar id'>@app_name</span> <span class='assign token'>=</span> <span class='dstring node'>&quot;fb-#{app_name}&quot;</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="process_opts-instance_method">
-  
-    - (<tt>Object</tt>) <strong>process_opts</strong>(options) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-42
-43
-44
-45
-46
-47
-48
-49</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 42</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_process_opts identifier id'>process_opts</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='rparen token'>)</span>
-  <span class='rubyid_@commands ivar id'>@commands</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:clear</span><span class='rbrack token'>]</span>
-    <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_process_procfile identifier id'>process_procfile</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:procfile</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_process_appname identifier id'>process_appname</span><span class='lparen token'>(</span><span class='rubyid_options identifier id'>options</span><span class='lbrack token'>[</span><span class='symbol val'>:app_name</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="process_procfile-instance_method">
-  
-    - (<tt>Object</tt>) <strong>process_procfile</strong>(name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 51</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_process_procfile identifier id'>process_procfile</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='rubyid_error identifier id'>error</span> <span class='dstring node'>&quot;#{name} is not a readable file&quot;</span> <span class='rubyid_unless unless_mod kw'>unless</span> <span class='rubyid_FileTest constant id'>FileTest</span><span class='dot token'>.</span><span class='rubyid_file? fid id'>file?</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='rubyid_commands identifier id'>commands</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='rubyid_content identifier id'>content</span> <span class='assign token'>=</span> <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='rubyid_name identifier id'>name</span><span class='rparen token'>)</span>
-  <span class='rubyid_content identifier id'>content</span><span class='dot token'>.</span><span class='rubyid_lines identifier id'>lines</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_line identifier id'>line</span><span class='bitor op'>|</span>
-    <span class='rubyid_line identifier id'>line</span><span class='dot token'>.</span><span class='rubyid_chomp! fid id'>chomp!</span>
-    <span class='rubyid_if if kw'>if</span> <span class='rubyid_line identifier id'>line</span> <span class='match op'>=~</span> <span class='regexp val'>/^(\w+?):(.*)$/</span>
-      <span class='rubyid_label identifier id'>label</span> <span class='assign token'>=</span> <span class='rubyid_$1 nth_ref id'>$1</span>
-      <span class='rubyid_command identifier id'>command</span> <span class='assign token'>=</span> <span class='rubyid_$2 nth_ref id'>$2</span>
-      <span class='rubyid_commands identifier id'>commands</span><span class='lbrack token'>[</span><span class='rubyid_label identifier id'>label</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='rubyid_command identifier id'>command</span>
-    <span class='rubyid_elsif elsif kw'>elsif</span> <span class='rubyid_line identifier id'>line</span> <span class='match op'>=~</span> <span class='regexp val'>/^\s*$/</span>
-      <span class='comment val'># do nothing</span>
-    <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_error identifier id'>error</span> <span class='string val'>&quot;procfile lines should have the following format: 'some_label: command'&quot;</span>
-    <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='rubyid_commands identifier id'>commands</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="read_global_opts-instance_method">
-  
-    - (<tt>Object</tt>) <strong>read_global_opts</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 24</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_read_global_opts identifier id'>read_global_opts</span>
-  <span class='rubyid_config identifier id'>config</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_FileTest constant id'>FileTest</span><span class='dot token'>.</span><span class='rubyid_file? fid id'>file?</span><span class='lparen token'>(</span><span class='rubyid_CONF constant id'>CONF</span><span class='rparen token'>)</span>
-    <span class='rubyid_YAML constant id'>YAML</span><span class='colon2 op'>::</span><span class='rubyid_load identifier id'>load</span><span class='lparen token'>(</span><span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_read identifier id'>read</span><span class='lparen token'>(</span><span class='rubyid_CONF constant id'>CONF</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-  <span class='rubyid_else else kw'>else</span>
-    <span class='rubyid_STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;#{CONF} not found&quot;</span>
-    <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
-  <span class='rubyid_end end kw'>end</span>
-  <span class='dstring node'>%w{helper_dir upstart_dir run_user}</span><span class='dot token'>.</span><span class='rubyid_each identifier id'>each</span> <span class='rubyid_do do kw'>do</span> <span class='bitor op'>|</span><span class='rubyid_param identifier id'>param</span><span class='bitor op'>|</span>
-    <span class='rubyid_value identifier id'>value</span> <span class='assign token'>=</span> <span class='rubyid_if if kw'>if</span> <span class='rubyid_config identifier id'>config</span><span class='lbrack token'>[</span><span class='rubyid_param identifier id'>param</span><span class='rbrack token'>]</span>
-      <span class='rubyid_config identifier id'>config</span><span class='lbrack token'>[</span><span class='rubyid_param identifier id'>param</span><span class='rbrack token'>]</span>
-    <span class='rubyid_else else kw'>else</span>
-      <span class='rubyid_STDERR constant id'>STDERR</span><span class='dot token'>.</span><span class='rubyid_puts identifier id'>puts</span> <span class='dstring node'>&quot;Param #{param} is not set, taking default value #{DEFAULTS[param]}&quot;</span>
-      <span class='rubyid_DEFAULTS constant id'>DEFAULTS</span><span class='lbrack token'>[</span><span class='rubyid_param identifier id'>param</span><span class='rbrack token'>]</span>
-    <span class='rubyid_end end kw'>end</span>
-    <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_send identifier id'>send</span> <span class='dstring node'>&quot;#{param}=&quot;</span><span class='comma token'>,</span> <span class='rubyid_value identifier id'>value</span>
-  <span class='rubyid_end end kw'>end</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="upstart_cmd_conf-instance_method">
-  
-    - (<tt>Object</tt>) <strong>upstart_cmd_conf</strong>(cmd_name) 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-130
-131
-132</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 130</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_upstart_cmd_conf identifier id'>upstart_cmd_conf</span><span class='lparen token'>(</span><span class='rubyid_cmd_name identifier id'>cmd_name</span><span class='rparen token'>)</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='rubyid_@upstart_dir ivar id'>@upstart_dir</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{app_cmd(cmd_name)}.conf&quot;</span><span class='rparen token'>)</span>
-<span class='rubyid_end end kw'>end</span>
-</pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <p class="signature " id="upstart_conf-instance_method">
-  
-    - (<tt>Object</tt>) <strong>upstart_conf</strong> 
-  
-
-  
-</p><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-122
-123
-124</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/upstart-exporter.rb', line 122</span>
-
-<span class='rubyid_def def kw'>def</span> <span class='rubyid_upstart_conf identifier id'>upstart_conf</span>
-  <span class='rubyid_File constant id'>File</span><span class='dot token'>.</span><span class='rubyid_join identifier id'>join</span><span class='lparen token'>(</span><span class='rubyid_@upstart_dir ivar id'>@upstart_dir</span><span class='comma token'>,</span> <span class='dstring node'>&quot;#{@app_name}.conf&quot;</span><span class='rparen token'>)</span>
 <span class='rubyid_end end kw'>end</span>
 </pre>
     </td>
@@ -1418,7 +445,7 @@ Returns the value of attribute upstart_dir
 </div>
     
     <div id="footer">
-  Generated on Thu Dec 15 17:00:58 2011 by 
+  Generated on Thu Dec 22 20:18:30 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.8.7).
 </div>

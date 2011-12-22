@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Upstart::Exporter::Templates
+  
+    &mdash; Documentation by YARD 0.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (T)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../../Upstart.html" title="Upstart (module)">Upstart</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Exporter.html" title="Upstart::Exporter (class)">Exporter</a></span></span>
+     &raquo; 
+    <span class="title">Templates</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: Upstart::Exporter::Templates
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Upstart::Exporter::Templates</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/upstart-exporter/templates.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="HELPER_TPL-constant" class="">HELPER_TPL =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>&quot;#!/bin/sh\n{{cmd}}\n&quot;</span>
+</pre></dd>
+      
+        <dt id="APP_TPL-constant" class="">APP_TPL =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>&quot;pre-start script\n\nbash &lt;&lt; \&quot;EOF\&quot;\nmkdir -p /var/log/{{app_name}}\nchown -R {{run_user}} /var/log/{{app_name}}\nEOF\n\nend script\n&quot;</span>
+</pre></dd>
+      
+        <dt id="COMMAND_TPL-constant" class="">COMMAND_TPL =
+          
+        </dt>
+        <dd><pre class="code"><span class='string val'>&quot;start on starting {{app_name}}\nstop on stopping {{app_name}}\nrespawn\n\nscript\ntouch /var/log/{{app_name}}/{{cmd_name}}.log\nchown {{run_user}} /var/log/{{app_name}}/{{cmd_name}}.log\nexec sudo -u {{run_user}} /bin/sh {{helper_cmd_conf}} &gt;&gt; /var/log/{{app_name}}/{{cmd_name}}.log 2&gt;&amp;1\nend\n&quot;</span>
+</pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app-class_method" title="app (class method)">+ (Object) <strong>app</strong>(binds) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#command-class_method" title="command (class method)">+ (Object) <strong>command</strong>(binds) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#helper-class_method" title="helper (class method)">+ (Object) <strong>helper</strong>(binds) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="app-class_method">
+  
+    + (<tt>Object</tt>) <strong>app</strong>(binds) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter/templates.rb', line 9</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_app identifier id'>app</span><span class='lparen token'>(</span><span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+  <span class='rubyid_interpolate identifier id'>interpolate</span><span class='lparen token'>(</span><span class='rubyid_APP_TPL constant id'>APP_TPL</span><span class='comma token'>,</span> <span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="command-class_method">
+  
+    + (<tt>Object</tt>) <strong>command</strong>(binds) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter/templates.rb', line 13</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_command identifier id'>command</span><span class='lparen token'>(</span><span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+  <span class='rubyid_interpolate identifier id'>interpolate</span><span class='lparen token'>(</span><span class='rubyid_COMMAND_TPL constant id'>COMMAND_TPL</span><span class='comma token'>,</span> <span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="helper-class_method">
+  
+    + (<tt>Object</tt>) <strong>helper</strong>(binds) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/upstart-exporter/templates.rb', line 5</span>
+
+<span class='rubyid_def def kw'>def</span> <span class='rubyid_self self kw'>self</span><span class='dot token'>.</span><span class='rubyid_helper identifier id'>helper</span><span class='lparen token'>(</span><span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+  <span class='rubyid_interpolate identifier id'>interpolate</span><span class='lparen token'>(</span><span class='rubyid_HELPER_TPL constant id'>HELPER_TPL</span><span class='comma token'>,</span> <span class='rubyid_binds identifier id'>binds</span><span class='rparen token'>)</span>
+<span class='rubyid_end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Thu Dec 22 20:18:30 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.4 (ruby-1.8.7).
+</div>
+
+  </body>
+</html>

@@ -1,2 +1,6 @@
-lib/upstart-exporter/version.rb a404cb7649f4dea9db79f256d83b8712ef428467
-lib/upstart-exporter.rb 7f28a3494f2ce18e7ba6ba0326f03ddb3ee24d09
+lib/upstart-exporter/errors.rb 047e710c4e096fc4904b4ab25f7bb582435a609d
+lib/upstart-exporter/options/global.rb 33275fe084a715f1008a55979f5be1512159a0eb
+lib/upstart-exporter/templates.rb d0e83f2f0438a8858ebab1176a4ce7a7d3a2bc68
+lib/upstart-exporter/version.rb 33b65b53ac5cd086145208f71e82ff0bf85017af
+lib/upstart-exporter.rb cdae517465df1e0d50976af9791048106a4ae98e
+lib/upstart-exporter/options/command_line.rb 2415bb8f834bf410ec50b4602de670111f9cd8c7
