@@ -7,7 +7,5 @@ gem 'rake'
 gem 'yard'
 gem 'redcarpet'
 
-group :test do
-  gem 'rspec'
-  gem 'fakefs', :require => 'fakefs/safe'
-end
+gem 'rspec'
+gem 'fakefs', :require => 'fakefs/safe'

@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
-Bundler.require(:default, :test, :development)
+Bundler.require
 
 require 'fakefs/spec_helpers'
 
