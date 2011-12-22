@@ -1,7 +1,7 @@
 Gem for exporting user-scripts as Upstart scripts
 ====================
 
-"!https://secure.travis-ci.org/savonarola/upstart-exporter.png!":http://travis-ci.org/savonarola/upstart-exporter
+[![Build Status](https://secure.travis-ci.org/savonarola/upstart-exporter.png)](http://travis-ci.org/savonarola/upstart-exporter)
 
 Purpose
 -------
