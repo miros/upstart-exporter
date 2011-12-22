@@ -77,6 +77,7 @@
 <span class='rubyid_run_user identifier id'>run_user</span><span class='colon op'>:</span> <span class='rubyid_www identifier id'>www</span> <span class='comment val'># The user under which all installed through upstart-exporter background jobs are run </span>
 <span class='rubyid_helper_dir identifier id'>helper_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_helper_dir identifier id'>helper_dir</span> <span class='comment val'># Auxilary directory for scripts incapsulating background jobs</span>
 <span class='rubyid_upstart_dir identifier id'>upstart_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_upstart_dir identifier id'>upstart_dir</span> <span class='comment val'># Directory where upstart scripts should be placed</span>
+<span class='rubyid_prefix identifier id'>prefix</span><span class='colon op'>:</span> <span class='string val'>'myupstartjobs-'</span> <span class='comment val'># Prefix added to app's log folders and upstart scripts</span>
 </pre>
 
 <p>The config is not installed by default. If this config is absent, the default values are the following:</p>
@@ -84,6 +85,7 @@
 <pre class="code"><span class='rubyid_helper_dir identifier id'>helper_dir</span><span class='colon op'>:</span> <span class='regexp val'>/var/</span><span class='rubyid_local identifier id'>local</span><span class='div op'>/</span><span class='rubyid_upstart_helpers identifier id'>upstart_helpers</span><span class='div op'>/</span>
 <span class='rubyid_upstart_dir identifier id'>upstart_dir</span><span class='colon op'>:</span> <span class='regexp val'>/etc/i</span><span class='rubyid_nit identifier id'>nit</span><span class='div op'>/</span>
 <span class='rubyid_run_user identifier id'>run_user</span><span class='colon op'>:</span> <span class='rubyid_service identifier id'>service</span>
+<span class='rubyid_prefix identifier id'>prefix</span><span class='colon op'>:</span> <span class='string val'>'fb-'</span>
 </pre>
 
 <p>To give a certain user (i.e. deployuser) ability to use this script, one can place the following lines into sudoers file:</p>
@@ -139,7 +141,7 @@
 <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span><span class='dot token'>.</span><span class='rubyid_sh identifier id'>sh</span>
 </pre>
 
-<p>Prefix fb- is added to avoid collisions with other upstart jobs. After this my_tail_cmd, for example, will be able to be started as an upstart script:</p>
+<p>Prefix &#39;fb-&#39; (which can be customised through config) is added to avoid collisions with other upstart jobs. After this my_tail_cmd, for example, will be able to be started as an upstart script:</p>
 
 <pre class="code"><span class='rubyid_sudo identifier id'>sudo</span> <span class='rubyid_start identifier id'>start</span> <span class='rubyid_fb identifier id'>fb</span><span class='minus op'>-</span><span class='rubyid_myapp identifier id'>myapp</span><span class='minus op'>-</span><span class='rubyid_my_tail_cmd identifier id'>my_tail_cmd</span>
 
@@ -166,7 +168,7 @@
 </div></div>
     
     <div id="footer">
-  Generated on Thu Dec 22 20:18:30 2011 by 
+  Generated on Thu Dec 22 20:43:31 2011 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.7.4 (ruby-1.8.7).
 </div>
