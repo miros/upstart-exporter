@@ -33,6 +33,6 @@ begin
   else
     Upstart::Exporter.new(options).export
   end
-rescue Upstart::ExportError => e
+rescue Upstart::Exporter::Error => e
   abort(e.to_s)
 end

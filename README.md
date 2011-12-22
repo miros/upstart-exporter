@@ -8,7 +8,7 @@ It is often neccessary to run some supporting background tasks for rails project
 
 This gem is an attempt to provide a safe way for installing backround jobs, so that they run under some fixed user without root priveleges.
 
-The only interface to the gem is the script(*upstart-export*) it provides.
+The only interface to the gem that should be used is the script(*upstart-export*) it provides.
 
 Installing
 ----------
@@ -72,9 +72,7 @@ where _myapp_ is the application name. This name only affects the names of gener
 
 in /etc/init/:
 
-    fb-myapp-my_another_tail_cmd-real.conf
     fb-myapp-my_another_tail_cmd.conf
-    fb-myapp-my_tail_cmd-real.conf
     fb-myapp-my_tail_cmd.conf
     fb-myapp.conf
 
