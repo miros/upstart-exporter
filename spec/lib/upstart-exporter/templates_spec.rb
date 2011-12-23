@@ -44,7 +44,7 @@ script
   touch /var/log/SOMEAPP/SOMECMD.log
   chown SOMEUSER /var/log/SOMEAPP/SOMECMD.log
   exec sudo -u SOMEUSER /bin/sh HELPERPATH >> /var/log/SOMEAPP/SOMECMD.log 2>&1
-end
+end script
 HEREDOC
 
       described_class.command(:run_user => 'SOMEUSER', :app_name => 'SOMEAPP', :cmd_name => 'SOMECMD', :helper_cmd_conf => 'HELPERPATH').should == conf

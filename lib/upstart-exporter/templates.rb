@@ -41,7 +41,7 @@ script
   touch /var/log/{{app_name}}/{{cmd_name}}.log
   chown {{run_user}} /var/log/{{app_name}}/{{cmd_name}}.log
   exec sudo -u {{run_user}} /bin/sh {{helper_cmd_conf}} >> /var/log/{{app_name}}/{{cmd_name}}.log 2>&1
-end
+end script
 HEREDOC
 
       def self.interpolate(str, substitutes)
