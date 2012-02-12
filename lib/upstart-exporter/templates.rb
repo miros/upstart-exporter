@@ -17,7 +17,8 @@ module Upstart
       protected
 
       HELPER_TPL = <<-HEREDOC
-#!/bin/sh
+#!/bin/bash
+source /etc/profile.d/rbenv.sh
 {{cmd}}
 HEREDOC
 

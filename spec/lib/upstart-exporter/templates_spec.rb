@@ -23,7 +23,8 @@ HEREDOC
     it "should generate a valid helper script" do
       
       conf = <<-HEREDOC
-#!/bin/sh
+#!/bin/bash
+source /etc/profile.d/rbenv.sh
 SOME COMMAND
 HEREDOC
 
