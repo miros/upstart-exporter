@@ -24,7 +24,9 @@ HEREDOC
       
       conf = <<-HEREDOC
 #!/bin/bash
-source /etc/profile.d/rbenv.sh
+if [ -f /etc/profile.d/rbenv.sh ]; then
+  source /etc/profile.d/rbenv.sh
+fi
 SOME COMMAND
 HEREDOC
 

@@ -18,7 +18,9 @@ module Upstart
 
       HELPER_TPL = <<-HEREDOC
 #!/bin/bash
-source /etc/profile.d/rbenv.sh
+if [ -f /etc/profile.d/rbenv.sh ]; then
+  source /etc/profile.d/rbenv.sh
+fi
 {{cmd}}
 HEREDOC
 
