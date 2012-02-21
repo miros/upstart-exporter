@@ -8,6 +8,7 @@ describe Upstart::Exporter do
       'helper_dir' => '/h',
       'upstart_dir' => '/u',
       'run_user' => 'u',
+      'run_group' => 'g',
       'prefix' => 'p-'
     }.to_yaml)
     make_procfile('Procfile', 'ls_cmd: ls')

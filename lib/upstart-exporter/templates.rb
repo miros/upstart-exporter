@@ -30,6 +30,8 @@ pre-start script
 bash << "EOF"
   mkdir -p /var/log/{{app_name}}
   chown -R {{run_user}} /var/log/{{app_name}}
+  chgrp -R {{run_group}} /var/log/{{app_name}}
+  chmod -R g+w /var/log/{{app_name}}
 EOF
 
 end script
@@ -43,6 +45,8 @@ respawn
 script
   touch /var/log/{{app_name}}/{{cmd_name}}.log
   chown {{run_user}} /var/log/{{app_name}}/{{cmd_name}}.log
+  chgrp {{run_group}} /var/log/{{app_name}}/{{cmd_name}}.log
+  chmod g+w /var/log/{{app_name}}/{{cmd_name}}.log
   exec sudo -u {{run_user}} /bin/sh {{helper_cmd_conf}} >> /var/log/{{app_name}}/{{cmd_name}}.log 2>&1
 end script
 HEREDOC

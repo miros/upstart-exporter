@@ -6,6 +6,7 @@ module Upstart::Exporter::Options
       'helper_dir' => '/var/local/upstart_helpers/',
       'upstart_dir' => '/etc/init/',
       'run_user' => 'service',
+      'run_group' => 'service',
       'prefix' => 'fb-'
     }
 
@@ -20,7 +21,7 @@ module Upstart::Exporter::Options
         {}
       end
       error "#{CONF} is not a valid YAML config" unless config.is_a?(Hash)
-      %w{helper_dir upstart_dir run_user prefix}.each do |param|
+      DEFAULTS.keys.each do |param|
         value = if config[param]
           config[param]
         else

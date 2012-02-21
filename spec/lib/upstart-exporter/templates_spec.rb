@@ -10,12 +10,14 @@ pre-start script
 bash << "EOF"
   mkdir -p /var/log/SOMEAPP
   chown -R SOMEUSER /var/log/SOMEAPP
+  chgrp -R SOMEGROUP /var/log/SOMEAPP
+  chmod -R g+w /var/log/SOMEAPP
 EOF
 
 end script
 HEREDOC
 
-      described_class.app(:run_user => 'SOMEUSER', :app_name => 'SOMEAPP').should == conf
+      described_class.app(:run_user => 'SOMEUSER', :run_group => 'SOMEGROUP', :app_name => 'SOMEAPP').should == conf
     end
   end
 
@@ -46,11 +48,13 @@ respawn
 script
   touch /var/log/SOMEAPP/SOMECMD.log
   chown SOMEUSER /var/log/SOMEAPP/SOMECMD.log
+  chgrp SOMEGROUP /var/log/SOMEAPP/SOMECMD.log
+  chmod g+w /var/log/SOMEAPP/SOMECMD.log
   exec sudo -u SOMEUSER /bin/sh HELPERPATH >> /var/log/SOMEAPP/SOMECMD.log 2>&1
 end script
 HEREDOC
 
-      described_class.command(:run_user => 'SOMEUSER', :app_name => 'SOMEAPP', :cmd_name => 'SOMECMD', :helper_cmd_conf => 'HELPERPATH').should == conf
+      described_class.command(:run_user => 'SOMEUSER', :run_group => 'SOMEGROUP', :app_name => 'SOMEAPP', :cmd_name => 'SOMECMD', :helper_cmd_conf => 'HELPERPATH').should == conf
     end
   end
 
