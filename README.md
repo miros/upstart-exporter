@@ -25,6 +25,7 @@ The export process is configured through the only config, /etc/upstart-exporter.
 
     ---
     run_user: www # The user under which all installed through upstart-exporter background jobs are run 
+    run_group: www # The group of run_user
     helper_dir: /var/helper_dir # Auxilary directory for scripts incapsulating background jobs
     upstart_dir: /var/upstart_dir # Directory where upstart scripts should be placed
     prefix: 'myupstartjobs-' # Prefix added to app's log folders and upstart scripts
