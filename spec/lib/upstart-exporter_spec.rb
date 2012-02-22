@@ -32,8 +32,8 @@ describe Upstart::Exporter do
       exporter.export
 
       File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => ' ls')
-      File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u', :app_name => 'p-app')
-      File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u', :app_name => 'p-app', :cmd_name => 'ls_cmd', :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
+      File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u', :run_group => 'g', :app_name => 'p-app')
+      File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u', :run_group => 'g',  :app_name => 'p-app', :cmd_name => 'ls_cmd', :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end
   end
 
