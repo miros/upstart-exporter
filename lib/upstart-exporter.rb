@@ -1,3 +1,4 @@
+require "yaml"
 require "upstart-exporter/version"
 require "upstart-exporter/templates"
 require "upstart-exporter/errors"
