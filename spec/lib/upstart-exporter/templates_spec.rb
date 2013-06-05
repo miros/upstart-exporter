@@ -3,7 +3,7 @@ require 'spec/spec_helper'
 describe Upstart::Exporter::Templates do
   describe ".app" do
     it "should generate a valid app config" do
-      
+
       conf = <<-HEREDOC
 pre-start script
 
@@ -23,7 +23,7 @@ HEREDOC
 
   describe ".helper" do
     it "should generate a valid helper script" do
-      
+
       conf = <<-HEREDOC
 #!/bin/bash
 if [ -f /etc/profile.d/rbenv.sh ]; then
@@ -39,7 +39,7 @@ HEREDOC
 
   describe ".helper" do
     it "should generate a valid upstart script for a single command" do
-      
+
       conf = <<-HEREDOC
 start on starting SOMEAPP
 stop on stopping SOMEAPP

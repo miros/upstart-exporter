@@ -18,7 +18,6 @@ describe Upstart::Exporter::Errors do
       end
 
       lambda{ Foo.new.error("arrgh") }.should raise_exception(Upstart::Exporter::Error)
-      
     end
   end
 end

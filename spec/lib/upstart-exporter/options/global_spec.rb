@@ -3,7 +3,7 @@ require 'spec/spec_helper'
 describe Upstart::Exporter::Options::Global do
   let(:defaults){ Upstart::Exporter::Options::Global::DEFAULTS }
   let(:conf){ Upstart::Exporter::Options::Global::CONF }
-  
+
 
   it "should give access to options like a hash" do
     capture(:stderr) do
@@ -40,7 +40,7 @@ describe Upstart::Exporter::Options::Global do
         described_class.new[:run_user].should == 'wwwww'
       end
     end
-    
+
     it "should preserve default values for options not specified in the config" do
       capture(:stderr) do
         make_global_config({'run_user' => 'wwwww'}.to_yaml)

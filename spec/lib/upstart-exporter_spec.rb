@@ -27,7 +27,7 @@ describe Upstart::Exporter do
         FileTest.file?(f).should be_true
       end
     end
-    
+
     it 'created scripts, folders and sh helpers should have valid content' do
       exporter.export
 
@@ -44,10 +44,10 @@ describe Upstart::Exporter do
       Dir['/h/*'].should be_empty
       Dir['/u/*'].should be_empty
     end
-    
+
     it 'should keep files of other apps' do
       exporter.export
-      
+
       make_procfile('Procfile1', 'ls_cmd: ls')
       other_exporter = described_class.new({:app_name => 'other_app', :procfile => 'Procfile1'})
       other_exporter.export

@@ -38,9 +38,10 @@ end script
 HEREDOC
 
       COMMAND_TPL = <<-HEREDOC
-start on starting {{app_name}}
-stop on stopping {{app_name}}
+start on {{start_on}}
+stop on {{stop_on}}
 respawn
+{{respawn_limit}}
 
 script
   touch /var/log/{{app_name}}/{{cmd_name}}.log
@@ -62,4 +63,3 @@ HEREDOC
     end
   end
 end
-    
