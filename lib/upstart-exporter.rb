@@ -6,7 +6,6 @@ require 'upstart-exporter/exporter_helpers'
 require 'upstart-exporter/expanded_exporter'
 require 'upstart-exporter/options/global'
 require 'upstart-exporter/options/command_line'
-require 'upstart-exporter/options/expanded_parser'
 
 module Upstart
   class Exporter
@@ -25,7 +24,6 @@ module Upstart
     def export
       clear
       export_app
-      log(options)
       if options[:commands]['version'] && options[:commands]['version'] == 2
         ExpandedExporter.export(options)
       else
@@ -72,7 +70,7 @@ module Upstart
       cmd_upstart_conf_content = Templates.command(
         :app_name => app_name,
         :start_on => "starting #{app_name}",
-        :stop_on => "stoping #{app_name}",
+        :stop_on => "stopping #{app_name}",
         :respawn_limit => '',
         :run_user => options[:run_user],
         :run_group => options[:run_group],

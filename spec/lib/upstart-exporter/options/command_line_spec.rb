@@ -13,6 +13,13 @@ describe Upstart::Exporter::Options::CommandLine do
         options[:commands].should == {'ls_cmd' => ' ls'}
     end
 
+    it 'should parse procfile v2' do
+        make_procfile('Procfile', "version: 2\ncommands:\n  ls:\n    command: ls -al")
+        options = described_class.new(:app_name => 'someappname', :procfile => 'Procfile')
+        options[:commands].should have_key('commands')
+        options[:commands]['commands'].should have_key('ls')
+    end
+
     it "should skip empty and commented lines in a procfile" do
         make_procfile('Procfile', "ls_cmd1: ls1\n\nls_cmd2: ls2\n # fooo baaar")
         options = described_class.new(:app_name => 'someappname', :procfile => 'Procfile')

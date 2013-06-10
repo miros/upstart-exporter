@@ -45,6 +45,7 @@ start on starting SOMEAPP
 stop on stopping SOMEAPP
 respawn
 
+
 script
   touch /var/log/SOMEAPP/SOMECMD.log
   chown SOMEUSER /var/log/SOMEAPP/SOMECMD.log
@@ -54,7 +55,14 @@ script
 end script
 HEREDOC
 
-      described_class.command(:run_user => 'SOMEUSER', :run_group => 'SOMEGROUP', :app_name => 'SOMEAPP', :cmd_name => 'SOMECMD', :helper_cmd_conf => 'HELPERPATH').should == conf
+      described_class.command(:run_user => 'SOMEUSER',
+                              :run_group => 'SOMEGROUP',
+                              :app_name => 'SOMEAPP',
+                              :cmd_name => 'SOMECMD',
+                              :respawn_limit => '',
+                              :start_on => 'starting SOMEAPP',
+                              :stop_on => 'stopping SOMEAPP',
+                              :helper_cmd_conf => 'HELPERPATH').should == conf
     end
   end
 

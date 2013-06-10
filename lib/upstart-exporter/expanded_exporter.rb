@@ -1,6 +1,5 @@
 class Upstart::Exporter
   class ExpandedExporter
-    include Errors
     include ExporterHelpers
 
     def self.export(options)
@@ -17,8 +16,7 @@ class Upstart::Exporter
 
     def export
       @commands.each do |command, value|
-        count = value['count']
-        if count
+        if count = value['count']
           count.times do |counter|
             export_cmd("#{command}_#{counter}", value)
           end
@@ -67,11 +65,11 @@ class Upstart::Exporter
     end
 
     def start_on
-      "runlevel #{@config['start_on_runlevel']}"
+      "#{@config['start_on_runlevel']}"
     end
 
     def stop_on
-      "runlevel #{@config['stop_on_runlevel']}"
+      "#{@config['stop_on_runlevel']}"
     end
 
     def export_cmd_upstart_conf(cmd_name)
