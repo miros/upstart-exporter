@@ -3,7 +3,7 @@ end
 
 module Upstart::Exporter::Errors
   def error(msg)
-    raise Upstart::Exporter::Error, msg 
+    raise Upstart::Exporter::Error, msg
   end
 end
 

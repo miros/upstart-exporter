@@ -27,13 +27,21 @@ describe Upstart::Exporter do
         FileTest.file?(f).should be_true
       end
     end
-    
+
     it 'created scripts, folders and sh helpers should have valid content' do
       exporter.export
 
       File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => ' ls')
       File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u', :run_group => 'g', :app_name => 'p-app')
-      File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u', :run_group => 'g',  :app_name => 'p-app', :cmd_name => 'ls_cmd', :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
+      File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u',
+                                                              :run_group => 'g',
+                                                              :app_name => 'p-app',
+                                                              :cmd_name => 'ls_cmd',
+                                                              :start_on => 'starting p-app',
+                                                              :stop_on => 'stopping p-app',
+                                                              :respawn => 'respawn',
+                                                              :respawn_limit => '',
+                                                              :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end
   end
 
@@ -44,10 +52,10 @@ describe Upstart::Exporter do
       Dir['/h/*'].should be_empty
       Dir['/u/*'].should be_empty
     end
-    
+
     it 'should keep files of other apps' do
       exporter.export
-      
+
       make_procfile('Procfile1', 'ls_cmd: ls')
       other_exporter = described_class.new({:app_name => 'other_app', :procfile => 'Procfile1'})
       other_exporter.export

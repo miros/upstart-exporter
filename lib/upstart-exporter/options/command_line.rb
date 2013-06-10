@@ -27,14 +27,18 @@ module Upstart::Exporter::Options
         elsif line =~ /^\s*$/
           # do nothing, empty
         else
-          error "procfile lines should have the following format: 'some_label: command'"
+          break if commands['version'] && commands['version'].strip == '2'
+          error "procfile version 1 lines should have the following format: 'some_label: command'"
         end
+      end
+      if commands['version'] && commands['version'].strip == '2'
+        commands = YAML.load(content)
       end
       commands
     end
 
     def process_appname(app_name)
-      error "Application name should contain only letters (and underscore) and be nonempty, so #{app_name.inspect} is not suitable" unless app_name =~ /^\w+$/ 
+      error "Application name should contain only letters (and underscore) and be nonempty, so #{app_name.inspect} is not suitable" unless app_name =~ /^\w+$/
       app_name
     end
 
