@@ -44,7 +44,7 @@ HEREDOC
 start on starting SOMEAPP
 stop on stopping SOMEAPP
 respawn
-
+respawn limit 5 10
 
 script
   touch /var/log/SOMEAPP/SOMECMD.log
@@ -59,7 +59,8 @@ HEREDOC
                               :run_group => 'SOMEGROUP',
                               :app_name => 'SOMEAPP',
                               :cmd_name => 'SOMECMD',
-                              :respawn_limit => '',
+                              :respawn => 'respawn',
+                              :respawn_limit => 'respawn limit 5 10',
                               :start_on => 'starting SOMEAPP',
                               :stop_on => 'stopping SOMEAPP',
                               :helper_cmd_conf => 'HELPERPATH').should == conf

@@ -40,7 +40,7 @@ HEREDOC
       COMMAND_TPL = <<-HEREDOC
 start on {{start_on}}
 stop on {{stop_on}}
-respawn
+{{respawn}}
 {{respawn_limit}}
 
 script

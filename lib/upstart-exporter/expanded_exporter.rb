@@ -33,7 +33,7 @@ class Upstart::Exporter
       script = add_env_command(script, value)
       script = add_dir_command(script, value)
       export_cmd_helper(command, script)
-      export_cmd_upstart_conf(command)
+      export_cmd_upstart_conf(command, value)
     end
 
     def add_env_command(script, command)
@@ -58,8 +58,13 @@ class Upstart::Exporter
       end
     end
 
-    def respawn_limit
-      lim = @config['respawn_limit']
+    def respawn(cmd_options)
+      respawn_enabled = cmd_options['respawn'] || (@config['respawn'] && @config['respawn'] == false)
+      respawn_enabled ? 'respawn' : ''
+    end
+
+    def respawn_limit(cmd_options)
+      lim = cmd_options['respawn_limit'] || @config['respawn_limit']
       return '' unless lim
       "respawn limit #{lim['count']} #{lim['interval']}"
     end
@@ -72,7 +77,7 @@ class Upstart::Exporter
       "#{@config['stop_on_runlevel']}"
     end
 
-    def export_cmd_upstart_conf(cmd_name)
+    def export_cmd_upstart_conf(cmd_name, cmd_options)
       cmd_upstart_conf_content = Templates.command(
         :app_name => app_name,
         :start_on => start_on,
@@ -81,7 +86,8 @@ class Upstart::Exporter
         :run_group => @options[:run_group],
         :cmd_name => cmd_name,
         :helper_cmd_conf => helper_cmd_conf(cmd_name),
-        :respawn_limit => respawn_limit
+        :respawn => respawn(cmd_options),
+        :respawn_limit => respawn_limit(cmd_options)
       )
       File.open(upstart_cmd_conf(cmd_name), 'w') do |f|
         f.write(cmd_upstart_conf_content)

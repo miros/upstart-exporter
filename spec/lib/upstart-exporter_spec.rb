@@ -39,6 +39,7 @@ describe Upstart::Exporter do
                                                               :cmd_name => 'ls_cmd',
                                                               :start_on => 'starting p-app',
                                                               :stop_on => 'stopping p-app',
+                                                              :respawn => 'respawn',
                                                               :respawn_limit => '',
                                                               :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end

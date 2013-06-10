@@ -71,6 +71,7 @@ module Upstart
         :app_name => app_name,
         :start_on => "starting #{app_name}",
         :stop_on => "stopping #{app_name}",
+        :respawn => 'respawn',
         :respawn_limit => '',
         :run_user => options[:run_user],
         :run_group => options[:run_group],

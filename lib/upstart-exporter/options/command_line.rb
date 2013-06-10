@@ -34,7 +34,6 @@ module Upstart::Exporter::Options
       if commands['version'] && commands['version'].strip == '2'
         commands = YAML.load(content)
       end
-      $stdout.puts commands
       commands
     end
 
