@@ -1,7 +1,7 @@
 require "yaml"
 require 'upstart-exporter/version'
-require 'upstart-exporter/templates'
 require 'upstart-exporter/errors'
+require 'upstart-exporter/templates'
 require 'upstart-exporter/exporter_helpers'
 require 'upstart-exporter/expanded_exporter'
 require 'upstart-exporter/options/global'

@@ -59,6 +59,9 @@ describe Upstart::Exporter::Options::CommandLine do
 
       lambda{ described_class.new(:app_name => 'someappname', :procfile => '::') }.should raise_exception
 
+      make_procfile('Procfile', "version: 2\ncommands:\n  ls cmd:\n    command: ls")
+      lambda{ described_class.new(:app_name => 'someappname', :procfile => 'Procfile') }.should raise_exception
+
       lambda{ described_class.new(:app_name => 'someappname') }.should raise_exception
     end
   end

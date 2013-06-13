@@ -33,7 +33,8 @@ describe Upstart::Exporter::ExpandedExporter do
 
   it 'merges env params in the right order' do
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options[:cmd].should == 'env B=b T=t  ls'
+      options[:cmd].should include('B=b')
+      options[:cmd].should include('T=t')
     end
     options = {
       :commands => {

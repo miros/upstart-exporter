@@ -1,6 +1,7 @@
 class Upstart::Exporter
   class ExpandedExporter
     include ExporterHelpers
+    include Errors
 
     def self.export(options)
       new(options).export
@@ -59,7 +60,13 @@ class Upstart::Exporter
     end
 
     def respawn(cmd_options)
-      respawn_enabled = cmd_options['respawn'] || (@config['respawn'] && @config['respawn'] == false)
+      respawn_enabled = if cmd_options['respawn'] != nil
+        cmd_options['respawn']
+      elsif @config['respawn'] != nil
+        @config['respawn']
+      else
+        true
+      end
       respawn_enabled ? 'respawn' : ''
     end
 

@@ -33,6 +33,8 @@ module Upstart::Exporter::Options
       end
       if commands['version'] && commands['version'].strip == '2'
         commands = YAML.load(content)
+        error('procfile should include "commands" key') unless commands['commands']
+        error('command names should include only letters and/or underscores') if commands['commands'].keys.find { |k| k !~ /\A[A-z_]*?\z/ }
       end
       commands
     end
