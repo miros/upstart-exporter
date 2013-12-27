@@ -51,7 +51,13 @@ module Upstart
     end
 
     def export_app
-      app_conf = Templates.app :app_name => app_name, :run_user => options[:run_user], :run_group => options[:run_group]
+      app_conf = Templates.app(
+        :app_name => app_name,
+        :run_user => options[:run_user],
+        :run_group => options[:run_group],
+        :start_on => options[:start_on_runlevel],
+        :stop_on => options[:stop_on_runlevel]
+      )
       File.open(upstart_conf, 'w') do |f|
         f.write(app_conf)
       end
