@@ -6,6 +6,8 @@ describe Upstart::Exporter::Templates do
 
       conf = <<-HEREDOC
 pre-start script
+start on 12
+stop on 13
 
 bash << "EOF"
   mkdir -p /var/log/SOMEAPP
@@ -17,7 +19,13 @@ EOF
 end script
 HEREDOC
 
-      described_class.app(:run_user => 'SOMEUSER', :run_group => 'SOMEGROUP', :app_name => 'SOMEAPP').should == conf
+      described_class.app(
+        :run_user => 'SOMEUSER', 
+        :run_group => 'SOMEGROUP', 
+        :app_name => 'SOMEAPP',
+        :start_on => '12',
+        :stop_on => '13'
+      ).should == conf
     end
   end
 

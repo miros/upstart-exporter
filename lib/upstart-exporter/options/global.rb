@@ -7,7 +7,9 @@ module Upstart::Exporter::Options
       'upstart_dir' => '/etc/init/',
       'run_user' => 'service',
       'run_group' => 'service',
-      'prefix' => 'fb-'
+      'prefix' => 'fb-',
+      'start_on_runlevel' => '[3]',
+      'stop_on_runlevel' => '[3]'
     }
 
     CONF = '/etc/upstart-exporter.yaml'

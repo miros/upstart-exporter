@@ -1,4 +1,4 @@
-require "yaml"
+require 'yaml'
 require 'upstart-exporter/version'
 require 'upstart-exporter/errors'
 require 'upstart-exporter/templates'
@@ -45,6 +45,16 @@ module Upstart
 
     protected
 
+    def start_on_runlevel
+      lvl = options[:commands]['start_on_runlevel'] || options[:start_on_runlevel]
+      "runlevel #{lvl}"
+    end
+
+    def stop_on_runlevel
+      lvl = options[:commands]['stop_on_runlevel'] || options[:stop_on_runlevel]
+      "runlevel #{lvl}"
+    end
+
     def ensure_dirs
       ensure_dir(options[:helper_dir])
       ensure_dir(options[:upstart_dir])
@@ -55,8 +65,8 @@ module Upstart
         :app_name => app_name,
         :run_user => options[:run_user],
         :run_group => options[:run_group],
-        :start_on => options[:start_on_runlevel],
-        :stop_on => options[:stop_on_runlevel]
+        :start_on => start_on_runlevel,
+        :stop_on => stop_on_runlevel
       )
       File.open(upstart_conf, 'w') do |f|
         f.write(app_conf)

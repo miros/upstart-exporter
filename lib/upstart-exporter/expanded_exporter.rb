@@ -77,11 +77,11 @@ class Upstart::Exporter
     end
 
     def start_on
-      "#{@config['start_on_runlevel']}"
+      "starting #{app_name}"
     end
 
     def stop_on
-      "#{@config['stop_on_runlevel']}"
+      "stopping #{app_name}"
     end
 
     def export_cmd_upstart_conf(cmd_name, cmd_options)
