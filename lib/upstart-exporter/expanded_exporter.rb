@@ -59,21 +59,24 @@ class Upstart::Exporter
       end
     end
 
-    def respawn(cmd_options)
-      respawn_enabled = if cmd_options['respawn'] != nil
+    def respawn_options(cmd_options)
+      if cmd_options.has_key?('respawn')
         cmd_options['respawn']
-      elsif @config['respawn'] != nil
+      elsif @config.has_key?('respawn')
         @config['respawn']
       else
-        true
+        {}
       end
-      respawn_enabled ? 'respawn' : ''
+    end
+
+    def respawn(cmd_options)
+      respawn_options(cmd_options) ? 'respawn' : ''
     end
 
     def respawn_limit(cmd_options)
-      lim = cmd_options['respawn_limit'] || @config['respawn_limit']
-      return '' unless lim
-      "respawn limit #{lim['count']} #{lim['interval']}"
+      limits = respawn_options(cmd_options)
+      return '' unless limits && limits['count'] && limits['interval']
+      "respawn limit #{limits['count'].to_i} #{limits['interval'].to_i}"
     end
 
     def start_on
