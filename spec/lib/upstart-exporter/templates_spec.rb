@@ -5,6 +5,9 @@ describe Upstart::Exporter::Templates do
     it "should generate a valid app config" do
 
       conf = <<-HEREDOC
+start on 12
+stop on 13
+
 pre-start script
 
 bash << "EOF"
@@ -17,7 +20,13 @@ EOF
 end script
 HEREDOC
 
-      described_class.app(:run_user => 'SOMEUSER', :run_group => 'SOMEGROUP', :app_name => 'SOMEAPP').should == conf
+      described_class.app(
+        :run_user => 'SOMEUSER', 
+        :run_group => 'SOMEGROUP', 
+        :app_name => 'SOMEAPP',
+        :start_on => '12',
+        :stop_on => '13'
+      ).should == conf
     end
   end
 

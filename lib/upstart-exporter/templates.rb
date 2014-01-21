@@ -32,6 +32,9 @@ fi
 HEREDOC
 
       APP_TPL = <<-HEREDOC
+start on {{start_on}}
+stop on {{stop_on}}
+
 pre-start script
 
 bash << "EOF"

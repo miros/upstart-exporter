@@ -9,7 +9,8 @@ describe Upstart::Exporter do
       'upstart_dir' => '/u',
       'run_user' => 'u',
       'run_group' => 'g',
-      'prefix' => 'p-'
+      'prefix' => 'p-',
+      'start_on_runlevel' => '[7]'
     }.to_yaml)
     make_procfile('Procfile', 'ls_cmd: ls')
     exporter = described_class.new({:app_name => 'app', :procfile => 'Procfile'})
@@ -32,7 +33,11 @@ describe Upstart::Exporter do
       exporter.export
 
       File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => ' ls')
-      File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u', :run_group => 'g', :app_name => 'p-app')
+      File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u',
+                                                   :run_group => 'g',
+                                                   :app_name => 'p-app',
+                                                   :start_on => 'runlevel [7]',
+                                                   :stop_on => 'runlevel [3]')
       File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u',
                                                               :run_group => 'g',
                                                               :app_name => 'p-app',

@@ -3,7 +3,6 @@ gemspec
 
 gem 'rake'
 gem 'yard'
-gem 'redcarpet'
 gem 'safe_yaml'
 
 gem 'rspec'
