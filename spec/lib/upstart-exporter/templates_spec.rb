@@ -5,9 +5,10 @@ describe Upstart::Exporter::Templates do
     it "should generate a valid app config" do
 
       conf = <<-HEREDOC
-pre-start script
 start on 12
 stop on 13
+
+pre-start script
 
 bash << "EOF"
   mkdir -p /var/log/SOMEAPP

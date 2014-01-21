@@ -32,9 +32,10 @@ fi
 HEREDOC
 
       APP_TPL = <<-HEREDOC
-pre-start script
 start on {{start_on}}
 stop on {{stop_on}}
+
+pre-start script
 
 bash << "EOF"
   mkdir -p /var/log/{{app_name}}
