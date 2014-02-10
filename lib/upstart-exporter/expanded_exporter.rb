@@ -13,6 +13,7 @@ class Upstart::Exporter
       @commands = @config['commands']
       @env = @config['env'] || {}
       @dir = @config['working_directory'] || ''
+      @log = @config['log'] || ''
     end
 
     def export
@@ -30,10 +31,14 @@ class Upstart::Exporter
   private
 
     def export_cmd(command, value)
+      value = {'working_directory' => @dir,'log' => @log}.merge(value)
+
       script = value['command']
       script = add_env_command(script, value)
       script = add_dir_command(script, value)
-      export_cmd_helper(command, script)
+      script = add_log_command(script, value)
+
+      export_cmd_helper(command, script, value)
       export_cmd_upstart_conf(command, value)
     end
 
@@ -51,11 +56,20 @@ class Upstart::Exporter
     end
 
     def add_dir_command(script, command)
-      dir = command['working_directory'] || @dir
+      dir = command['working_directory']
       if dir.empty?
         script
       else
         "cd '#{dir}' && #{script}"
+      end
+    end
+
+    def add_log_command(script, command)
+      log = command['log']
+      if log.empty?
+        script
+      else
+        "#{script} >> #{log} 2>&1"
       end
     end
 

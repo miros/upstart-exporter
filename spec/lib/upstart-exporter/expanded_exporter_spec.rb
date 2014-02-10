@@ -56,4 +56,33 @@ describe Upstart::Exporter::ExpandedExporter do
 
     described_class.export(options)
   end
+
+  it 'passes all calculated binds to the helper exporter' do
+    options = {
+      :app_name => 'appname',
+      :commands => {
+        'log' => 'public.log',
+        'working_directory' => '/',
+        'commands' => {
+          'rm1' => {
+            'command' => 'rm *',
+            'log' => 'private.log'
+          },
+          'rm2' => {
+            'command' => 'rm -rf *',
+            'working_directory' => '/home'
+          }
+        }
+      }
+    }.merge(@defaults)
+    Upstart::Exporter::Templates.should_receive(:helper) do |options|
+      options.should include('working_directory' => '/')
+      options.should include('log' => 'private.log')
+    end
+    Upstart::Exporter::Templates.should_receive(:helper) do |options|
+      options.should include('working_directory' => '/home')
+      options.should include('log' => 'public.log')
+    end
+    described_class.export(options)
+  end
 end
