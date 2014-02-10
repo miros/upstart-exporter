@@ -18,31 +18,31 @@ class Upstart::Exporter
     end
 
     def export
-      @commands.each do |command, value|
-        if count = value['count']
+      @commands.each do |command, cmd_options|
+        if count = cmd_options['count']
           count.times do |counter|
-            export_cmd("#{command}_#{counter}", value)
+            export_cmd("#{command}_#{counter}", cmd_options)
           end
         else
-          export_cmd(command, value)
+          export_cmd(command, cmd_options)
         end
       end
     end
 
   private
 
-    def export_cmd(command, value)
-      value = { 'working_directory' => @dir,
-                'log' => @log,
-                'kill_timeout' => @kill_timeout }.merge(value)
+    def export_cmd(command, cmd_options)
+      cmd_options = { 'working_directory' => @dir,
+                      'log' => @log,
+                      'kill_timeout' => @kill_timeout }.merge(cmd_options)
 
-      script = value['command']
-      script = add_env_command(script, value)
-      script = add_dir_command(script, value)
-      script = add_log_command(script, value)
+      script = cmd_options['command']
+      script = add_env_command(script, cmd_options)
+      script = add_dir_command(script, cmd_options)
+      script = add_log_command(script, cmd_options)
 
-      export_cmd_helper(command, script, value)
-      export_cmd_upstart_conf(command, value)
+      export_cmd_helper(command, script, cmd_options)
+      export_cmd_upstart_conf(command, cmd_options)
     end
 
     def add_env_command(script, command)
