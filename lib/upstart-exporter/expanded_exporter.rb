@@ -31,7 +31,7 @@ class Upstart::Exporter
   private
 
     def export_cmd(command, value)
-      value = {'working_directory' => @dir,'log' => @log}.merge(value)
+      value = {'working_directory' => @dir, 'log' => @log}.merge(value)
 
       script = value['command']
       script = add_env_command(script, value)
