@@ -21,8 +21,8 @@ end script
 HEREDOC
 
       described_class.app(
-        :run_user => 'SOMEUSER', 
-        :run_group => 'SOMEGROUP', 
+        :run_user => 'SOMEUSER',
+        :run_group => 'SOMEGROUP',
         :app_name => 'SOMEAPP',
         :start_on => '12',
         :stop_on => '13'
