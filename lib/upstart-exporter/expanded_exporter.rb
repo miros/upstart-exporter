@@ -14,6 +14,7 @@ class Upstart::Exporter
       @env = @config['env'] || {}
       @dir = @config['working_directory'] || ''
       @log = @config['log'] || ''
+      @kill_timeout = @config['kill_timeout'] || options[:kill_timeout]
     end
 
     def export
@@ -31,7 +32,9 @@ class Upstart::Exporter
   private
 
     def export_cmd(command, value)
-      value = {'working_directory' => @dir, 'log' => @log}.merge(value)
+      value = { 'working_directory' => @dir,
+                'log' => @log,
+                'kill_timeout' => @kill_timeout }.merge(value)
 
       script = value['command']
       script = add_env_command(script, value)
@@ -101,6 +104,10 @@ class Upstart::Exporter
       "stopping #{app_name}"
     end
 
+    def kill_timeout(cmd_options)
+      cmd_options.fetch('kill_timeout', @kill_timeout)
+    end
+
     def export_cmd_upstart_conf(cmd_name, cmd_options)
       cmd_upstart_conf_content = Templates.command(
         :app_name => app_name,
@@ -111,7 +118,8 @@ class Upstart::Exporter
         :cmd_name => cmd_name,
         :helper_cmd_conf => helper_cmd_conf(cmd_name),
         :respawn => respawn(cmd_options),
-        :respawn_limit => respawn_limit(cmd_options)
+        :respawn_limit => respawn_limit(cmd_options),
+        :kill_timeout => kill_timeout(cmd_options)
       )
       File.open(upstart_cmd_conf(cmd_name), 'w') do |f|
         f.write(cmd_upstart_conf_content)

@@ -46,6 +46,7 @@ describe Upstart::Exporter do
                                                               :stop_on => 'stopping p-app',
                                                               :respawn => 'respawn',
                                                               :respawn_limit => '',
+                                                              :kill_timeout => 30,
                                                               :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end
   end

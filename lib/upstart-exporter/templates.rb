@@ -27,7 +27,7 @@ module Upstart
 #!/bin/bash
 
 DIR="{{working_directory}}"
-WAIT=30
+WAIT={{kill_timeout}}
 pid=""
 
 [[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
@@ -82,6 +82,7 @@ start on {{start_on}}
 stop on {{stop_on}}
 {{respawn}}
 {{respawn_limit}}
+kill timeout {{kill_timeout}}
 
 script
   touch /var/log/{{app_name}}/{{cmd_name}}.log

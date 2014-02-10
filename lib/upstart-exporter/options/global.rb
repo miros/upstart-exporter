@@ -9,7 +9,8 @@ module Upstart::Exporter::Options
       'run_group' => 'service',
       'prefix' => 'fb-',
       'start_on_runlevel' => '[3]',
-      'stop_on_runlevel' => '[3]'
+      'stop_on_runlevel' => '[3]',
+      'kill_timeout' => 30
     }
 
     CONF = '/etc/upstart-exporter.yaml'

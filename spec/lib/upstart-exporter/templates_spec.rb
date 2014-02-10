@@ -37,7 +37,7 @@ HEREDOC
 #!/bin/bash
 
 DIR="SOME DIR"
-WAIT=30
+WAIT=11
 pid=""
 
 [[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
@@ -71,7 +71,9 @@ exitHandler() {
 main
 HEREDOC
 
-      described_class.helper('cmd' => 'SOME COMMAND', 'working_directory' => 'SOME DIR').should == conf
+      described_class.helper('cmd' => 'SOME COMMAND',
+                             'working_directory' => 'SOME DIR',
+                             'kill_timeout' => 11).should == conf
     end
   end
 
@@ -84,6 +86,7 @@ start on starting SOMEAPP
 stop on stopping SOMEAPP
 respawn
 respawn limit 5 10
+kill timeout 24
 
 script
   touch /var/log/SOMEAPP/SOMECMD.log
@@ -102,6 +105,7 @@ HEREDOC
                               :respawn_limit => 'respawn limit 5 10',
                               :start_on => 'starting SOMEAPP',
                               :stop_on => 'stopping SOMEAPP',
+                              :kill_timeout => 24,
                               :helper_cmd_conf => 'HELPERPATH').should == conf
     end
   end

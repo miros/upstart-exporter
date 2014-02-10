@@ -89,6 +89,7 @@ module Upstart
         :stop_on => "stopping #{app_name}",
         :respawn => 'respawn',
         :respawn_limit => '',
+        :kill_timeout => options[:kill_timeout],
         :run_user => options[:run_user],
         :run_group => options[:run_group],
         :cmd_name => cmd_name,
