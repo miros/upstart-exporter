@@ -65,7 +65,7 @@ HEREDOC
       def self.interpolate(str, substitutes)
         str_copy = str.dup
         substitutes.each do |k, v|
-          str_copy.gsub!("{{#{k}}}", v)
+          str_copy.gsub!("{{#{k}}}", v.to_s)
         end
         str_copy
       end
