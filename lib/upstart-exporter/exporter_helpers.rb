@@ -30,9 +30,9 @@ class Upstart::Exporter
 
       *start, tail = cmd.split /\s*(&&|\|\|)\s*/
       tail.gsub!(/\A(exec\s*|\s*)/, "exec ")
-      exec_cmd = start.push(tail).join(" ")
+      cmd = start.push(tail).join(" ")
 
-      binds.merge(:cmd => cmd, :exec_cmd => exec_cmd)
+      binds.merge(:cmd => cmd)
     end
   end
 end

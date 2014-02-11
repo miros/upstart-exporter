@@ -41,7 +41,7 @@ HEREDOC
 SOME COMMAND
 HEREDOC
 
-      described_class.helper('exec_cmd' => 'SOME COMMAND').should == conf
+      described_class.helper('cmd' => 'SOME COMMAND').should == conf
     end
   end
 

@@ -83,17 +83,17 @@ describe Upstart::Exporter::ExpandedExporter do
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
       options.should include('working_directory' => '/var/log') # propagated from 'commands'
       options.should include('log' => 'private.log')            # redefined by command
-      options.should include(:exec_cmd => "cd '/var/log' && exec rm * >> private.log 2>&1")
+      options.should include(:cmd => "cd '/var/log' && exec rm * >> private.log 2>&1")
     end
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
       options.should include('working_directory' => '/home')    # redefined by command
       options.should include('log' => 'public.log')             # propagated from the very top level
-      options.should include(:exec_cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
+      options.should include(:cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
     end
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
       options.should include('working_directory' => '/var/log') # propagated from 'commands'
       options.should include('log' => 'public.log')             # propagated from the very top level
-      options.should include(:exec_cmd => "cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1")
+      options.should include(:cmd => "cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1")
     end
     described_class.export(options)
   end

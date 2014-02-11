@@ -28,7 +28,7 @@ module Upstart
 
 [[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
 
-{{exec_cmd}}
+{{cmd}}
 HEREDOC
 
       APP_TPL = <<-HEREDOC
