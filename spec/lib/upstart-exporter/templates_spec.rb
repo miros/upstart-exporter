@@ -36,44 +36,12 @@ HEREDOC
       conf = <<-HEREDOC
 #!/bin/bash
 
-DIR="SOME DIR"
-WAIT=11
-pid=""
-
 [[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
 
-main() {
-  [[ ! -d $DIR ]] && exit 1
-
-  trap exitHandler SIGINT SIGTERM
-
-  pushd &> /dev/null
-    SOME COMMAND
-    pid="$!"
-  popd &> /dev/null
-}
-
-exitHandler() {
-  [[ -z $pid || ! -d /proc/$pid ]] && exit 0
-
-  kill -TERM $pid
-
-  local i
-
-  for i in $(seq 1 $WAIT) ; do
-    [[ ! -d /proc/$pid ]] && exit 0
-    sleep 1
-  done
-
-  kill -KILL $pid
-}
-
-main
+SOME COMMAND
 HEREDOC
 
-      described_class.helper('cmd' => 'SOME COMMAND',
-                             'working_directory' => 'SOME DIR',
-                             'kill_timeout' => 11).should == conf
+      described_class.helper('exec_cmd' => 'SOME COMMAND').should == conf
     end
   end
 

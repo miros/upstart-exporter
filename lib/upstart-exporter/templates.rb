@@ -26,39 +26,9 @@ module Upstart
       HELPER_TPL = <<-HEREDOC
 #!/bin/bash
 
-DIR="{{working_directory}}"
-WAIT={{kill_timeout}}
-pid=""
-
 [[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
 
-main() {
-  [[ ! -d $DIR ]] && exit 1
-
-  trap exitHandler SIGINT SIGTERM
-
-  pushd &> /dev/null
-    {{cmd}}
-    pid="$!"
-  popd &> /dev/null
-}
-
-exitHandler() {
-  [[ -z $pid || ! -d /proc/$pid ]] && exit 0
-
-  kill -TERM $pid
-
-  local i
-
-  for i in $(seq 1 $WAIT) ; do
-    [[ ! -d /proc/$pid ]] && exit 0
-    sleep 1
-  done
-
-  kill -KILL $pid
-}
-
-main
+{{exec_cmd}}
 HEREDOC
 
       APP_TPL = <<-HEREDOC

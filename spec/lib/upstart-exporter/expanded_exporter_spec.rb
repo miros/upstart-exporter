@@ -78,10 +78,12 @@ describe Upstart::Exporter::ExpandedExporter do
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
       options.should include('working_directory' => '/')
       options.should include('log' => 'private.log')
+      options.should include(:exec_cmd => "cd '/' && exec rm * >> private.log 2>&1")
     end
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
       options.should include('working_directory' => '/home')
       options.should include('log' => 'public.log')
+      options.should include(:exec_cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
     end
     described_class.export(options)
   end
