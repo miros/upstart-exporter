@@ -1,7 +1,7 @@
 class Upstart::Exporter
   module ExporterHelpers
     def export_cmd_helper(cmd_name, cmd, binds={})
-      helper_script_cont = Templates.helper helper_binds(cmd, binds)
+      helper_script_cont = Templates.helper append_cmd(cmd, binds)
       File.open(helper_cmd_conf(cmd_name), 'w') do |f|
         f.write(helper_script_cont)
       end
@@ -25,7 +25,7 @@ class Upstart::Exporter
 
     private
 
-    def helper_binds(cmd, binds)
+    def append_cmd(cmd, binds)
       return binds unless cmd
 
       *start, tail = cmd.split /\s*(&&|\|\|)\s*/
