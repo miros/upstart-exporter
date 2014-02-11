@@ -29,9 +29,11 @@ class Upstart::Exporter
   private
 
     def export_cmd(command, cmd_options)
-      cmd_options = { 'working_directory' => working_directory(cmd_options),
-                      'log' => log(cmd_options),
-                      'kill_timeout' => kill_timeout(cmd_options) }.merge(cmd_options)
+      cmd_options = {
+        'working_directory' => working_directory(cmd_options),
+        'log' => log(cmd_options),
+        'kill_timeout' => kill_timeout(cmd_options)
+      }.merge(cmd_options)
 
       script = cmd_options['command']
       script = add_env_command(script, cmd_options)
