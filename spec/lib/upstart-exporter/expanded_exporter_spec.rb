@@ -59,10 +59,12 @@ describe Upstart::Exporter::ExpandedExporter do
 
   it 'passes all calculated binds to the helper exporter' do
     options = {
+      :version => 2,
       :app_name => 'appname',
+      :working_directory => "/",
+      :log => "public.log",
       :commands => {
-        'log' => 'public.log',
-        'working_directory' => '/',
+        'working_directory' => '/var/log',
         'commands' => {
           'rm1' => {
             'command' => 'rm *',
@@ -71,19 +73,27 @@ describe Upstart::Exporter::ExpandedExporter do
           'rm2' => {
             'command' => 'rm -rf *',
             'working_directory' => '/home'
+          },
+          'rm3' => {
+            'command' => 'rm -f vmlinuz',
           }
         }
       }
     }.merge(@defaults)
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options.should include('working_directory' => '/')
-      options.should include('log' => 'private.log')
-      options.should include(:exec_cmd => "cd '/' && exec rm * >> private.log 2>&1")
+      options.should include('working_directory' => '/var/log') # propagated from 'commands'
+      options.should include('log' => 'private.log')            # redefined by command
+      options.should include(:exec_cmd => "cd '/var/log' && exec rm * >> private.log 2>&1")
     end
     Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options.should include('working_directory' => '/home')
-      options.should include('log' => 'public.log')
+      options.should include('working_directory' => '/home')    # redefined by command
+      options.should include('log' => 'public.log')             # propagated from the very top level
       options.should include(:exec_cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
+    end
+    Upstart::Exporter::Templates.should_receive(:helper) do |options|
+      options.should include('working_directory' => '/var/log') # propagated from 'commands'
+      options.should include('log' => 'public.log')             # propagated from the very top level
+      options.should include(:exec_cmd => "cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1")
     end
     described_class.export(options)
   end
