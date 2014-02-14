@@ -28,9 +28,9 @@ class Upstart::Exporter
     def append_cmd(cmd, binds)
       return binds unless cmd
 
-      *start, tail = cmd.split /\s*(&&|\|\|)\s*/
-      tail.gsub!(/\A(exec\s*|\s*)/, "exec ")
-      cmd = start.push(tail).join(" ")
+      parts = cmd.split /\s*(&&|\|\|)\s*/
+      parts.last.gsub!(/\A(exec\s*|\s*)/, "exec ")
+      cmd = parts.join(" ")
 
       binds.merge(:cmd => cmd)
     end
