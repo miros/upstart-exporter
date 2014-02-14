@@ -25,9 +25,9 @@ module Upstart
 
       HELPER_TPL = <<-HEREDOC
 #!/bin/bash
-if [ -f /etc/profile.d/rbenv.sh ]; then
-  source /etc/profile.d/rbenv.sh
-fi
+
+[[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
+
 {{cmd}}
 HEREDOC
 
@@ -52,6 +52,7 @@ start on {{start_on}}
 stop on {{stop_on}}
 {{respawn}}
 {{respawn_limit}}
+kill timeout {{kill_timeout}}
 
 script
   touch /var/log/{{app_name}}/{{cmd_name}}.log
@@ -65,7 +66,7 @@ HEREDOC
       def self.interpolate(str, substitutes)
         str_copy = str.dup
         substitutes.each do |k, v|
-          str_copy.gsub!("{{#{k}}}", v)
+          str_copy.gsub!("{{#{k}}}", v.to_s)
         end
         str_copy
       end

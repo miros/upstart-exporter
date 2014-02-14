@@ -32,7 +32,7 @@ describe Upstart::Exporter do
     it 'created scripts, folders and sh helpers should have valid content' do
       exporter.export
 
-      File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => ' ls')
+      File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => 'exec ls')
       File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u',
                                                    :run_group => 'g',
                                                    :app_name => 'p-app',
@@ -46,6 +46,7 @@ describe Upstart::Exporter do
                                                               :stop_on => 'stopping p-app',
                                                               :respawn => 'respawn',
                                                               :respawn_limit => '',
+                                                              :kill_timeout => 30,
                                                               :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end
   end

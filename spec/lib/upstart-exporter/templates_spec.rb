@@ -21,8 +21,8 @@ end script
 HEREDOC
 
       described_class.app(
-        :run_user => 'SOMEUSER', 
-        :run_group => 'SOMEGROUP', 
+        :run_user => 'SOMEUSER',
+        :run_group => 'SOMEGROUP',
         :app_name => 'SOMEAPP',
         :start_on => '12',
         :stop_on => '13'
@@ -35,13 +35,13 @@ HEREDOC
 
       conf = <<-HEREDOC
 #!/bin/bash
-if [ -f /etc/profile.d/rbenv.sh ]; then
-  source /etc/profile.d/rbenv.sh
-fi
+
+[[ -r /etc/profile.d/rbenv.sh ]] && source /etc/profile.d/rbenv.sh
+
 SOME COMMAND
 HEREDOC
 
-      described_class.helper(:cmd => 'SOME COMMAND').should == conf
+      described_class.helper('cmd' => 'SOME COMMAND').should == conf
     end
   end
 
@@ -54,6 +54,7 @@ start on starting SOMEAPP
 stop on stopping SOMEAPP
 respawn
 respawn limit 5 10
+kill timeout 24
 
 script
   touch /var/log/SOMEAPP/SOMECMD.log
@@ -72,6 +73,7 @@ HEREDOC
                               :respawn_limit => 'respawn limit 5 10',
                               :start_on => 'starting SOMEAPP',
                               :stop_on => 'stopping SOMEAPP',
+                              :kill_timeout => 24,
                               :helper_cmd_conf => 'HELPERPATH').should == conf
     end
   end

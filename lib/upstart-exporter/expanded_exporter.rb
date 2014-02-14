@@ -12,29 +12,36 @@ class Upstart::Exporter
       @options = options
       @commands = @config['commands']
       @env = @config['env'] || {}
-      @dir = @config['working_directory'] || ''
     end
 
     def export
-      @commands.each do |command, value|
-        if count = value['count']
+      @commands.each do |command, cmd_options|
+        if count = cmd_options['count']
           count.times do |counter|
-            export_cmd("#{command}_#{counter}", value)
+            export_cmd("#{command}_#{counter}", cmd_options)
           end
         else
-          export_cmd(command, value)
+          export_cmd(command, cmd_options)
         end
       end
     end
 
   private
 
-    def export_cmd(command, value)
-      script = value['command']
-      script = add_env_command(script, value)
-      script = add_dir_command(script, value)
-      export_cmd_helper(command, script)
-      export_cmd_upstart_conf(command, value)
+    def export_cmd(command, cmd_options)
+      cmd_options = {
+        'working_directory' => working_directory(cmd_options),
+        'log' => log(cmd_options),
+        'kill_timeout' => kill_timeout(cmd_options)
+      }.merge(cmd_options)
+
+      script = cmd_options['command']
+      script = add_env_command(script, cmd_options)
+      script = add_dir_command(script, cmd_options)
+      script = add_log_command(script, cmd_options)
+
+      export_cmd_helper(command, script, cmd_options)
+      export_cmd_upstart_conf(command, cmd_options)
     end
 
     def add_env_command(script, command)
@@ -51,11 +58,20 @@ class Upstart::Exporter
     end
 
     def add_dir_command(script, command)
-      dir = command['working_directory'] || @dir
+      dir = command['working_directory']
       if dir.empty?
         script
       else
         "cd '#{dir}' && #{script}"
+      end
+    end
+
+    def add_log_command(script, command)
+      log = command['log']
+      if log.empty?
+        script
+      else
+        "#{script} >> #{log} 2>&1"
       end
     end
 
@@ -87,6 +103,18 @@ class Upstart::Exporter
       "stopping #{app_name}"
     end
 
+    def working_directory(cmd_options)
+      command_option(cmd_options, 'working_directory')
+    end
+
+    def log(cmd_options)
+      command_option(cmd_options, 'log')
+    end
+
+    def kill_timeout(cmd_options)
+      command_option(cmd_options, 'kill_timeout')
+    end
+
     def export_cmd_upstart_conf(cmd_name, cmd_options)
       cmd_upstart_conf_content = Templates.command(
         :app_name => app_name,
@@ -97,11 +125,18 @@ class Upstart::Exporter
         :cmd_name => cmd_name,
         :helper_cmd_conf => helper_cmd_conf(cmd_name),
         :respawn => respawn(cmd_options),
-        :respawn_limit => respawn_limit(cmd_options)
+        :respawn_limit => respawn_limit(cmd_options),
+        :kill_timeout => kill_timeout(cmd_options)
       )
       File.open(upstart_cmd_conf(cmd_name), 'w') do |f|
         f.write(cmd_upstart_conf_content)
       end
+    end
+
+    private
+
+    def command_option(cmd_options, key)
+      cmd_options[key.to_s] || @config[key.to_s] || @options[key.to_sym] || ''
     end
   end
 end
