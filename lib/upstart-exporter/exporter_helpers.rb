@@ -29,10 +29,23 @@ class Upstart::Exporter
       return binds unless cmd
 
       parts = cmd.split /\s*(&&|\|\|)\s*/
-      parts.last.gsub!(/\A(exec\s*|\s*)/, "exec ")
-      cmd = parts.join(" ")
+      parts.push ensure_prepend_exec(parts.pop)
 
-      binds.merge(:cmd => cmd)
+      binds.merge(:cmd => parts.join(" "))
+    end
+
+    def ensure_prepend_exec(cmd)
+      cmd = guard_leading_env_var(cmd.strip)
+      cmd.gsub(/\A(exec\s*|\s*)/, "exec ")
+    end
+
+    def guard_leading_env_var(cmd)
+      if cmd =~ /\A\S+=\S+/
+        warn "WARNING: Command '#{cmd}' seems to start with assignment of environment var. Prepending with 'env'"
+        "env #{cmd}"
+      else
+        cmd
+      end
     end
   end
 end

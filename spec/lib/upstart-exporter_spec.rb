@@ -3,7 +3,7 @@ require 'spec/spec_helper'
 describe Upstart::Exporter do
   let(:tpl){ Upstart::Exporter::Templates }
 
-  let(:exporter) do
+  before do
     make_global_config({
       'helper_dir' => '/h',
       'upstart_dir' => '/u',
@@ -13,6 +13,9 @@ describe Upstart::Exporter do
       'start_on_runlevel' => '[7]'
     }.to_yaml)
     make_procfile('Procfile', 'ls_cmd: ls')
+  end
+
+  let(:exporter) do
     exporter = described_class.new({:app_name => 'app', :procfile => 'Procfile'})
   end
 
@@ -48,6 +51,13 @@ describe Upstart::Exporter do
                                                               :respawn_limit => '',
                                                               :kill_timeout => 30,
                                                               :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
+    end
+
+    it 'prepends with "env" command starts with env var assignment' do
+      make_procfile('Procfile', 'sidekiq: RAILS_ENV=production sidekiq')
+      exporter.export
+
+      File.read('/h/p-app-sidekiq.sh').should == tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq')
     end
   end
 
