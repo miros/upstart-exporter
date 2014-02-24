@@ -59,6 +59,13 @@ describe Upstart::Exporter do
 
       File.read('/h/p-app-sidekiq.sh').should == tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq')
     end
+
+    it 'call to "env" will not appear twice' do
+      make_procfile('Procfile', 'sidekiq: env RAILS_ENV=production sidekiq')
+      exporter.export
+
+      File.read('/h/p-app-sidekiq.sh').should == tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq')
+    end
   end
 
   describe '#clear' do
