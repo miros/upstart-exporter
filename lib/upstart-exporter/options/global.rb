@@ -10,7 +10,11 @@ module Upstart::Exporter::Options
       'prefix' => 'fb-',
       'start_on_runlevel' => '[3]',
       'stop_on_runlevel' => '[3]',
-      'kill_timeout' => 30
+      'kill_timeout' => 30,
+      'respawn' => {
+        'count' => 5,
+        'interval' => 10
+      }
     }
 
     CONF = '/etc/upstart-exporter.yaml'
