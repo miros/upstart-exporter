@@ -134,10 +134,7 @@ class Upstart::Exporter
     end
 
     def extract_options(*array)
-      array.each do |value|
-        next if value.nil?
-        return value
-      end
+      array.find { |v| !v.nil? }
     end
   end
 end
