@@ -29,6 +29,9 @@ The export process is configured through the only config, /etc/upstart-exporter.
     helper_dir: /var/helper_dir # Auxilary directory for scripts incapsulating background jobs
     upstart_dir: /var/upstart_dir # Directory where upstart scripts should be placed
     prefix: 'myupstartjobs-' # Prefix added to app's log folders and upstart scripts
+    respawn: # Controls how often job can fail and be restarted, set to false to prohibit restart after failure
+      limit: 10 # Number of allowed restarts in given interval
+      interval: 10 # Interval in seconds
 
 The config is not installed by default. If this config is absent, the default values are the following:
 
@@ -36,6 +39,9 @@ The config is not installed by default. If this config is absent, the default va
     upstart_dir: /etc/init/
     run_user: service
     prefix: 'fb-'
+    respawn:
+      limit: 5
+      interval: 10
 
 To give a certain user (i.e. deployuser) ability to use this script, you can place the following lines into sudoers file:
 

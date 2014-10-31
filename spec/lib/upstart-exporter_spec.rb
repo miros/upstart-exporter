@@ -10,13 +10,43 @@ describe Upstart::Exporter do
       'run_user' => 'u',
       'run_group' => 'g',
       'prefix' => 'p-',
-      'start_on_runlevel' => '[7]'
+      'start_on_runlevel' => '[7]',
+      'respawn' => {
+        'count' => 7,
+        'interval' => 14
+      }
     }.to_yaml)
     make_procfile('Procfile', 'ls_cmd: ls')
   end
 
   let(:exporter) do
     exporter = described_class.new({:app_name => 'app', :procfile => 'Procfile'})
+  end
+
+  describe '#export v2' do
+    it 'should correctly set respawn option' do
+
+      yaml = <<-eos
+version: 2
+commands:
+  first_cmd:
+    command: ping 127.0.0.1
+    respawn:
+      count: 9
+      interval: 19
+  second_cmd:
+    command: ping 127.0.0.1
+    respawn: false
+  third_cmd:
+    command: ping 127.0.0.1
+      eos
+      make_procfile('Procfile', yaml)
+
+      exporter.export
+      File.read('/u/p-app-first_cmd.conf').should include("respawn\nrespawn limit 9 19")
+      File.read('/u/p-app-second_cmd.conf').should_not include("respawn")
+      File.read('/u/p-app-third_cmd.conf').should include("respawn\nrespawn limit 7 14")
+    end
   end
 
   describe '#export' do
@@ -48,7 +78,7 @@ describe Upstart::Exporter do
                                                               :start_on => 'starting p-app',
                                                               :stop_on => 'stopping p-app',
                                                               :respawn => 'respawn',
-                                                              :respawn_limit => '',
+                                                              :respawn_limit => 'respawn limit 7 14',
                                                               :kill_timeout => 30,
                                                               :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
     end

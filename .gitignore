@@ -3,3 +3,5 @@
 Gemfile.lock
 pkg/*
 *.sw?
+test.yaml
+temp/*
