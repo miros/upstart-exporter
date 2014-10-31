@@ -36,6 +36,9 @@ The config is not installed by default. If this config is absent, the default va
     upstart_dir: /etc/init/
     run_user: service
     prefix: 'fb-'
+    respawn:
+      limit: 5
+      interval: 10
 
 To give a certain user (i.e. deployuser) ability to use this script, you can place the following lines into sudoers file:
 
