@@ -87,8 +87,8 @@ module Upstart
         :app_name => app_name,
         :start_on => "starting #{app_name}",
         :stop_on => "stopping #{app_name}",
-        :respawn => 'respawn',
-        :respawn_limit => '',
+        :respawn => respawn,
+        :respawn_limit => respawn_limit,
         :kill_timeout => options[:kill_timeout],
         :run_user => options[:run_user],
         :run_group => options[:run_group],
@@ -98,6 +98,16 @@ module Upstart
       File.open(upstart_cmd_conf(cmd_name), 'w') do |f|
         f.write(cmd_upstart_conf_content)
       end
+    end
+
+    def respawn
+      options[:respawn] ? 'respawn' : ''
+    end
+
+    def respawn_limit
+      limits = options[:respawn]
+      return unless limits
+      "respawn limit #{limits['count'].to_i} #{limits['interval'].to_i}"
     end
 
     def export_command(cmd_name, cmd)
