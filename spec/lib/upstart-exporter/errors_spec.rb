@@ -7,7 +7,7 @@ describe Upstart::Exporter::Errors do
         include Upstart::Exporter::Errors
       end
 
-      Foo.new.should respond_to(:error)
+      expect(Foo.new).to respond_to(:error)
     end
   end
 
@@ -17,7 +17,7 @@ describe Upstart::Exporter::Errors do
         include Upstart::Exporter::Errors
       end
 
-      lambda{ Foo.new.error("arrgh") }.should raise_exception(Upstart::Exporter::Error)
+      expect{ Foo.new.error("arrgh") }.to raise_exception(Upstart::Exporter::Error)
     end
   end
 end

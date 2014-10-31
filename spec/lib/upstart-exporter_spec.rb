@@ -43,35 +43,35 @@ commands:
       make_procfile('Procfile', yaml)
 
       exporter.export
-      File.read('/u/p-app-first_cmd.conf').should include("respawn\nrespawn limit 9 19")
-      File.read('/u/p-app-second_cmd.conf').should_not include("respawn")
-      File.read('/u/p-app-third_cmd.conf').should include("respawn\nrespawn limit 7 14")
+      expect(File.read('/u/p-app-first_cmd.conf')).to include("respawn\nrespawn limit 9 19")
+      expect(File.read('/u/p-app-second_cmd.conf')).not_to include("respawn")
+      expect(File.read('/u/p-app-third_cmd.conf')).to include("respawn\nrespawn limit 7 14")
     end
   end
 
   describe '#export' do
     it 'should make cleanup before export' do
-      exporter.should_receive(:clear)
+      expect(exporter).to receive(:clear)
       exporter.export
     end
 
     it 'should create upstart scripts, folders and sh helpers' do
       exporter.export
       %w{/h/p-app-ls_cmd.sh /u/p-app.conf /u/p-app-ls_cmd.conf}.each do |f|
-        FileTest.file?(f).should be_true
+        expect(FileTest.file?(f)).to eq(true)
       end
     end
 
     it 'created scripts, folders and sh helpers should have valid content' do
       exporter.export
 
-      File.read('/h/p-app-ls_cmd.sh').should == tpl.helper(:cmd => 'exec ls')
-      File.read('/u/p-app.conf').should == tpl.app(:run_user => 'u',
+      expect(File.read('/h/p-app-ls_cmd.sh')).to eq(tpl.helper(:cmd => 'exec ls'))
+      expect(File.read('/u/p-app.conf')).to eq(tpl.app(:run_user => 'u',
                                                    :run_group => 'g',
                                                    :app_name => 'p-app',
                                                    :start_on => 'runlevel [7]',
-                                                   :stop_on => 'runlevel [3]')
-      File.read('/u/p-app-ls_cmd.conf').should == tpl.command(:run_user => 'u',
+                                                   :stop_on => 'runlevel [3]'))
+      expect(File.read('/u/p-app-ls_cmd.conf')).to eq(tpl.command(:run_user => 'u',
                                                               :run_group => 'g',
                                                               :app_name => 'p-app',
                                                               :cmd_name => 'ls_cmd',
@@ -80,21 +80,21 @@ commands:
                                                               :respawn => 'respawn',
                                                               :respawn_limit => 'respawn limit 7 14',
                                                               :kill_timeout => 30,
-                                                              :helper_cmd_conf => '/h/p-app-ls_cmd.sh')
+                                                              :helper_cmd_conf => '/h/p-app-ls_cmd.sh'))
     end
 
     it 'prepends with "env" command starts with env var assignment' do
       make_procfile('Procfile', 'sidekiq: RAILS_ENV=production sidekiq')
       exporter.export
 
-      File.read('/h/p-app-sidekiq.sh').should == tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq')
+      expect(File.read('/h/p-app-sidekiq.sh')).to eq(tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq'))
     end
 
     it 'call to "env" will not appear twice' do
       make_procfile('Procfile', 'sidekiq: env RAILS_ENV=production sidekiq')
       exporter.export
 
-      File.read('/h/p-app-sidekiq.sh').should == tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq')
+      expect(File.read('/h/p-app-sidekiq.sh')).to eq(tpl.helper(:cmd => 'exec env RAILS_ENV=production sidekiq'))
     end
   end
 
@@ -102,8 +102,8 @@ commands:
     it 'should remove exported app helpers an scripts' do
       exporter.export
       exporter.clear
-      Dir['/h/*'].should be_empty
-      Dir['/u/*'].should be_empty
+      expect(Dir['/h/*']).to be_empty
+      expect(Dir['/u/*']).to be_empty
     end
 
     it 'should keep files of other apps' do
@@ -116,7 +116,7 @@ commands:
       exporter.clear
 
       %w{/h/p-other_app-ls_cmd.sh /u/p-other_app.conf /u/p-other_app-ls_cmd.conf}.each do |f|
-        FileTest.file?(f).should be_true
+        expect(FileTest.file?(f)).to eql true
       end
     end
   end

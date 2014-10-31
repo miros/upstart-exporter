@@ -20,13 +20,13 @@ EOF
 end script
 HEREDOC
 
-      described_class.app(
+      expect(described_class.app(
         :run_user => 'SOMEUSER',
         :run_group => 'SOMEGROUP',
         :app_name => 'SOMEAPP',
         :start_on => '12',
         :stop_on => '13'
-      ).should == conf
+      )).to eq(conf)
     end
   end
 
@@ -41,7 +41,7 @@ HEREDOC
 SOME COMMAND
 HEREDOC
 
-      described_class.helper('cmd' => 'SOME COMMAND').should == conf
+      expect(described_class.helper('cmd' => 'SOME COMMAND')).to eq(conf)
     end
   end
 
@@ -65,7 +65,7 @@ script
 end script
 HEREDOC
 
-      described_class.command(:run_user => 'SOMEUSER',
+      expect(described_class.command(:run_user => 'SOMEUSER',
                               :run_group => 'SOMEGROUP',
                               :app_name => 'SOMEAPP',
                               :cmd_name => 'SOMECMD',
@@ -74,7 +74,7 @@ HEREDOC
                               :start_on => 'starting SOMEAPP',
                               :stop_on => 'stopping SOMEAPP',
                               :kill_timeout => 24,
-                              :helper_cmd_conf => 'HELPERPATH').should == conf
+                              :helper_cmd_conf => 'HELPERPATH')).to eq(conf)
     end
   end
 
