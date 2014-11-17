@@ -80,21 +80,21 @@ describe Upstart::Exporter::ExpandedExporter do
         }
       }
     }.merge(@defaults)
-    expect(Upstart::Exporter::Templates).to receive(:helper) do |options|
-      expect(options).to include('working_directory' => '/var/log') # propagated from 'commands'
-      expect(options).to include('log' => 'private.log')            # redefined by command
-      expect(options).to include(:cmd => "cd '/var/log' && exec rm * >> private.log 2>&1")
-    end
-    expect(Upstart::Exporter::Templates).to receive(:helper) do |options|
-      expect(options).to include('working_directory' => '/home')    # redefined by command
-      expect(options).to include('log' => 'public.log')             # propagated from the very top level
-      expect(options).to include(:cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
-    end
-    expect(Upstart::Exporter::Templates).to receive(:helper) do |options|
-      expect(options).to include('working_directory' => '/var/log') # propagated from 'commands'
-      expect(options).to include('log' => 'public.log')             # propagated from the very top level
-      expect(options).to include(:cmd => "cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1")
-    end
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/var/log",
+      "log"=>"private.log",
+      :cmd=>"cd '/var/log' && exec rm * >> private.log 2>&1"
+    ))
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/home",
+      "log"=>"public.log",
+      :cmd=>"cd '/home' && exec rm -rf * >> public.log 2>&1"
+    ))
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/var/log",
+      "log"=>"public.log",
+      :cmd=>"cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1"
+    ))
     described_class.export(options)
   end
 end
