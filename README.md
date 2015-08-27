@@ -115,6 +115,7 @@ look like this:
         respawn: false # by default respawn option is enabled
       my_one_another_tail_cmd:
         command: /usr/bin/tail -F /var/log/messages
+        log: /var/log/messages_copy
       my_multi_tail_cmd:
         command: /usr/bin/tail -F /var/log/messages
         count: 2
@@ -133,6 +134,8 @@ For Procfile example given earlier the generated command will look like:
 
     env RAILS_ENV=staging TEST=true your_command
 
+`log` option lets you override the default log location (`/var/log/fb-my_website/my_one_another_tail_cmd.log`).
+
 `respawn` option controls restarting of scripts in case of their failure.
 By default this option is enabled. For
 more info look into [documentation](http://upstart.ubuntu.com/cookbook/#respawn).
@@ -141,7 +144,7 @@ more info look into [documentation](http://upstart.ubuntu.com/cookbook/#respawn)
 often than `count` times in `interval`, it won't be restarted anymore. For more
 info look into [documentation](http://upstart.ubuntu.com/cookbook/#respawn-limit).
 
-Options `working_directory`, `env`, `respawn` and `respawn_limit` can be
+Options `working_directory`, `env`, `log`, `respawn` and `respawn_limit` can be
 defined both as global and as per-command options.
 
 Exporting
