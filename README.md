@@ -112,6 +112,7 @@ look like this:
         working_directory: '/var/...' # if needs to be redefined
       my_another_tail_cmd:
         command: /usr/bin/tail -F /var/log/messages
+        kill_timeout: 60
         respawn: false # by default respawn option is enabled
       my_one_another_tail_cmd:
         command: /usr/bin/tail -F /var/log/messages
@@ -135,6 +136,8 @@ For Procfile example given earlier the generated command will look like:
     env RAILS_ENV=staging TEST=true your_command
 
 `log` option lets you override the default log location (`/var/log/fb-my_website/my_one_another_tail_cmd.log`).
+
+`kill_timeout` option lets you override the default process kill timeout of 30 seconds.
 
 `respawn` option controls restarting of scripts in case of their failure.
 By default this option is enabled. For
