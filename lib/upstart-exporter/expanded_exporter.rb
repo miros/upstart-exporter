@@ -75,16 +75,6 @@ class Upstart::Exporter
       end
     end
 
-    def respawn_options(cmd_options)
-      if cmd_options.has_key?('respawn')
-        cmd_options['respawn']
-      elsif @config.has_key?('respawn')
-        @config['respawn']
-      else
-        {}
-      end
-    end
-
     def respawn(cmd_options)
       respawn_options(cmd_options) ? 'respawn' : ''
     end
@@ -101,6 +91,10 @@ class Upstart::Exporter
 
     def stop_on
       "stopping #{app_name}"
+    end
+
+    def respawn_options(cmd_options)
+      command_option(cmd_options, 'respawn')
     end
 
     def working_directory(cmd_options)
@@ -136,7 +130,11 @@ class Upstart::Exporter
     private
 
     def command_option(cmd_options, key)
-      cmd_options[key.to_s] || @config[key.to_s] || @options[key.to_sym] || ''
+      extract_options(cmd_options[key.to_s], @config[key.to_s], @options[key.to_sym], '')
+    end
+
+    def extract_options(*array)
+      array.find { |v| !v.nil? }
     end
   end
 end

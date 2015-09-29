@@ -7,7 +7,7 @@ describe Upstart::Exporter::Options::Global do
 
   it "should give access to options like a hash" do
     capture(:stderr) do
-      described_class.new.should respond_to('[]')
+      expect(described_class.new).to respond_to('[]')
     end
   end
 
@@ -17,7 +17,7 @@ describe Upstart::Exporter::Options::Global do
       capture(:stderr) do
         options = described_class.new
         defaults.each do |option, default_value|
-          options[option.to_sym].should == default_value
+          expect(options[option.to_sym]).to eq(default_value)
         end
       end
     end
@@ -27,9 +27,9 @@ describe Upstart::Exporter::Options::Global do
   context "when invalid config is given" do
     it "should raise exception" do
       make_global_config('zxc')
-      lambda{described_class.new}.should raise_exception
+      expect{described_class.new}.to raise_exception
       make_global_config([123].to_yaml)
-      lambda{described_class.new}.should raise_exception
+      expect{described_class.new}.to raise_exception
     end
   end
 
@@ -37,7 +37,7 @@ describe Upstart::Exporter::Options::Global do
     it "should override default values" do
       capture(:stderr) do
         make_global_config({'run_user' => 'wwwww'}.to_yaml)
-        described_class.new[:run_user].should == 'wwwww'
+        expect(described_class.new[:run_user]).to eq('wwwww')
       end
     end
 

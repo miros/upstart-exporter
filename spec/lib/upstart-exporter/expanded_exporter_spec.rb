@@ -7,11 +7,11 @@ describe Upstart::Exporter::ExpandedExporter do
       @defaults[key.to_sym] = value
     end
 
-    File.stub(:open)
+    allow(File).to receive(:open)
   end
 
   it 'calls template render exact amount of times' do
-    Upstart::Exporter::Templates.should_receive(:command).exactly(5).times
+    expect(Upstart::Exporter::Templates).to receive(:command).exactly(5).times
     options = {
       :commands => {
         'commands' => {
@@ -32,9 +32,9 @@ describe Upstart::Exporter::ExpandedExporter do
   end
 
   it 'merges env params in the right order' do
-    Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options[:cmd].should include('B=b')
-      options[:cmd].should include('T=t')
+    expect(Upstart::Exporter::Templates).to receive(:helper) do |options|
+      expect(options[:cmd]).to include('B=b')
+      expect(options[:cmd]).to include('T=t')
     end
     options = {
       :commands => {
@@ -80,21 +80,21 @@ describe Upstart::Exporter::ExpandedExporter do
         }
       }
     }.merge(@defaults)
-    Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options.should include('working_directory' => '/var/log') # propagated from 'commands'
-      options.should include('log' => 'private.log')            # redefined by command
-      options.should include(:cmd => "cd '/var/log' && exec rm * >> private.log 2>&1")
-    end
-    Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options.should include('working_directory' => '/home')    # redefined by command
-      options.should include('log' => 'public.log')             # propagated from the very top level
-      options.should include(:cmd => "cd '/home' && exec rm -rf * >> public.log 2>&1")
-    end
-    Upstart::Exporter::Templates.should_receive(:helper) do |options|
-      options.should include('working_directory' => '/var/log') # propagated from 'commands'
-      options.should include('log' => 'public.log')             # propagated from the very top level
-      options.should include(:cmd => "cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1")
-    end
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/var/log",
+      "log"=>"private.log",
+      :cmd=>"cd '/var/log' && exec rm * >> private.log 2>&1"
+    ))
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/home",
+      "log"=>"public.log",
+      :cmd=>"cd '/home' && exec rm -rf * >> public.log 2>&1"
+    ))
+    expect(Upstart::Exporter::Templates).to receive(:helper).with(hash_including(
+      "working_directory"=>"/var/log",
+      "log"=>"public.log",
+      :cmd=>"cd '/var/log' && exec rm -f vmlinuz >> public.log 2>&1"
+    ))
     described_class.export(options)
   end
 end
