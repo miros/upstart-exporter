@@ -19,7 +19,7 @@ describe Upstart::Exporter::Options::Validator do
 
   describe "procfile v2" do
     it "validates respawn" do
-      options = {:procfile_commands => {:version => 2, :respawn => {:kill_timeout => "10;"}}}
+      options = {:procfile_commands => {:version => 2, :respawn => {:limit => "10;"}}}
       validator = described_class.new(options)
       expect {validator.validate!}.to raise_error(Upstart::Exporter::Error)
     end
