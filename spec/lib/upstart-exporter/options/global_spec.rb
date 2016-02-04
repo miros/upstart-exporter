@@ -44,7 +44,7 @@ describe Upstart::Exporter::Options::Global do
     it "should preserve default values for options not specified in the config" do
       capture(:stderr) do
         make_global_config({'run_user' => 'wwwww'}.to_yaml)
-        described_class.new[:prefix] == defaults['prefix']
+        described_class.new[:prefix] == defaults[:prefix]
       end
     end
   end

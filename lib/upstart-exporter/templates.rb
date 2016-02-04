@@ -8,16 +8,10 @@ module Upstart
       end
 
       def self.app(binds)
-        if error_val = binds.find { |v| v =~ /\A[A-z0-9_\- ]*?\z/ }
-          error("value #{error_val} is insecure and can't be accepted")
-        end
         interpolate(APP_TPL, binds)
       end
 
       def self.command(binds)
-        if error_val = binds.find { |v| v =~ /\A[A-z0-9_\- ]*?\z/ }
-          error("value #{error_val} is insecure and can't be accepted")
-        end
         interpolate(COMMAND_TPL, binds)
       end
 
