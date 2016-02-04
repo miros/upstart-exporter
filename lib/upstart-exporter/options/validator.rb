@@ -33,7 +33,7 @@ module Upstart::Exporter::Options
 
       def validate_procfile_v2(config)
         validate_command_params(config)
-        config[:commands].values.each {|cmd| validate_command_params(cmd)}
+        config.fetch(:commands, {}).values.each {|cmd| validate_command_params(cmd)}
       end
 
       def validate_command_params(cmd)
@@ -41,11 +41,13 @@ module Upstart::Exporter::Options
         validate_runlevel(cmd[:stop_on_runlevel])
         validate_path(cmd[:working_directory])
         validate_respawn(cmd[:respawn])
+        validate_digits(cmd[:count])
+        validate_digits(cmd[:kill_timeout])
       end
 
       def validate_respawn(options)
         return unless options
-        validate_digits(options[:kill_timeout])
+        validate_digits(options[:limit])
         validate_digits(options[:interval])
       end
 
