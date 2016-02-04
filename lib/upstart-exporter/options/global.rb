@@ -3,17 +3,17 @@ module Upstart::Exporter::Options
     include Upstart::Exporter::Errors
 
     DEFAULTS = {
-      'helper_dir' => '/var/local/upstart_helpers/',
-      'upstart_dir' => '/etc/init/',
-      'run_user' => 'service',
-      'run_group' => 'service',
-      'prefix' => 'fb-',
-      'start_on_runlevel' => '[3]',
-      'stop_on_runlevel' => '[3]',
-      'kill_timeout' => 30,
-      'respawn' => {
-        'count' => 5,
-        'interval' => 10
+      :helper_dir => '/var/local/upstart_helpers/',
+      :upstart_dir => '/etc/init/',
+      :run_user => 'service',
+      :run_group => 'service',
+      :prefix => 'fb-',
+      :start_on_runlevel => '[3]',
+      :stop_on_runlevel => '[3]',
+      :kill_timeout => 30,
+      :respawn => {
+        :count => 5,
+        :interval => 10
       }
     }
 
@@ -22,11 +22,12 @@ module Upstart::Exporter::Options
     def initialize
       super
       config = if FileTest.file?(CONF)
-        YAML::load(File.read(CONF))
+        Upstart::Exporter::HashUtils.symbolize_keys(YAML::load(File.read(CONF)))
       else
         $stderr.puts "#{CONF} not found"
         {}
       end
+
       error "#{CONF} is not a valid YAML config" unless config.is_a?(Hash)
       DEFAULTS.keys.each do |param|
         value = if config[param]

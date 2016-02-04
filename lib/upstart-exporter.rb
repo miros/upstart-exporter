@@ -4,8 +4,10 @@ require 'upstart-exporter/errors'
 require 'upstart-exporter/templates'
 require 'upstart-exporter/exporter_helpers'
 require 'upstart-exporter/expanded_exporter'
+require 'upstart-exporter/hash_utils'
 require 'upstart-exporter/options/global'
 require 'upstart-exporter/options/command_line'
+require 'upstart-exporter/options/validator'
 
 module Upstart
   class Exporter
@@ -17,17 +19,20 @@ module Upstart
     def initialize(command_line_args)
       global_options = Options::Global.new
       command_line_options = Options::CommandLine.new(command_line_args)
+
       @options = global_options.merge(command_line_options)
+      Upstart::Exporter::Options::Validator.new(@options).validate!
+
       ensure_dirs
     end
 
     def export
       clear
       export_app
-      if options[:commands]['version'] && options[:commands]['version'] == 2
+      if options[:procfile_commands][:version] && options[:procfile_commands][:version] == 2
         ExpandedExporter.export(options)
       else
-        options[:commands].each do |cmd_name, cmd|
+        options[:procfile_commands].each do |cmd_name, cmd|
           export_command(cmd_name, cmd)
         end
       end
@@ -46,12 +51,12 @@ module Upstart
     protected
 
     def start_on_runlevel
-      lvl = options[:commands]['start_on_runlevel'] || options[:start_on_runlevel]
+      lvl = options[:procfile_commands][:start_on_runlevel] || options[:start_on_runlevel]
       "runlevel #{lvl}"
     end
 
     def stop_on_runlevel
-      lvl = options[:commands]['stop_on_runlevel'] || options[:stop_on_runlevel]
+      lvl = options[:procfile_commands][:stop_on_runlevel] || options[:stop_on_runlevel]
       "runlevel #{lvl}"
     end
 
@@ -107,7 +112,7 @@ module Upstart
     def respawn_limit
       limits = options[:respawn]
       return unless limits
-      "respawn limit #{limits['count'].to_i} #{limits['interval'].to_i}"
+      "respawn limit #{limits[:count].to_i} #{limits[:interval].to_i}"
     end
 
     def export_command(cmd_name, cmd)

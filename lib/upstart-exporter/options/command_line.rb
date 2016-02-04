@@ -4,11 +4,11 @@ module Upstart::Exporter::Options
 
     def initialize(command_line_args)
       super
-      self[:commands] = if command_line_args[:clear]
+      self[:procfile_commands] = if command_line_args[:clear]
         {}
-      else
+                        else
         process_procfile(command_line_args[:procfile])
-      end
+                        end
       self[:app_name] = process_appname(command_line_args[:app_name])
     end
 
@@ -32,9 +32,12 @@ module Upstart::Exporter::Options
         end
       end
       if commands['version'] && commands['version'].strip == '2'
-        commands = YAML.load(content)
-        error('procfile should include "commands" key') unless commands['commands']
-        error('command names should include only letters and/or underscores') if commands['commands'].keys.find { |k| k !~ /\A[A-z\d_]*?\z/ }
+        commands = Upstart::Exporter::HashUtils::symbolize_keys(YAML.load(content))
+        error('procfile should include "commands" key') unless commands[:commands]
+
+        if invalid_name = commands[:commands].keys.find {|k| k.to_s !~ /\A[A-z\d_]*?\z/}
+          error("command name #{invalid_name} should include only letters and/or underscores")
+        end
       end
       commands
     end
