@@ -21,7 +21,7 @@ module Upstart
       command_line_options = Options::CommandLine.new(command_line_args)
 
       @options = global_options.merge(command_line_options)
-      Upstart::Exporter::Options::Validator.new(@options).validate!
+      @options = Upstart::Exporter::Options::Validator.new(@options).call
 
       ensure_dirs
     end
@@ -100,6 +100,7 @@ module Upstart
         :cmd_name => cmd_name,
         :helper_cmd_conf => helper_cmd_conf(cmd_name)
       )
+
       File.open(upstart_cmd_conf(cmd_name), 'w') do |f|
         f.write(cmd_upstart_conf_content)
       end
