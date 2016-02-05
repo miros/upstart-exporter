@@ -9,46 +9,65 @@ module Upstart::Exporter::Options
       @options = options
     end
 
-    def validate!
-      validate_path(options[:helper_dir])
-      validate_path(options[:upstart_dir])
+    def call
+      clean_params = {
+        :app_name => reject_special_symbols(options[:app_name]),
+        :helper_dir => validate_path(options[:helper_dir]),
+        :upstart_dir => validate_path(options[:upstart_dir]),
+        :run_user => reject_special_symbols(options[:run_user]),
+        :run_group => reject_special_symbols(options[:run_group]),
+        :prefix => reject_special_symbols(options[:prefix]),
+        :start_on_runlevel => validate_runlevel(options[:start_on_runlevel]),
+        :stop_on_runlevel => validate_runlevel(options[:stop_on_runlevel]),
+        :kill_timeout => validate_digits(options[:kill_timeout]),
+        :respawn => validate_respawn(options[:respawn]),
+        :working_directory => validate_path(options[:working_directory]),
+        :procfile_commands => validate_procfile(options[:procfile_commands])
+      }
 
-      reject_special_symbols(options[:run_user])
-      reject_special_symbols(options[:run_group])
-      reject_special_symbols(options[:prefix])
-
-      validate_runlevel(options[:start_on_runlevel])
-      validate_runlevel(options[:stop_on_runlevel])
-
-      validate_digits(options[:kill_timeout])
-
-      validate_respawn(options[:respawn])
-
-      if options[:procfile_commands][:version] == 2
-        validate_procfile_v2(options[:procfile_commands])
-      end
+      clean_params
     end
 
     private
 
+      def validate_procfile(config)
+        if config[:version] == 2
+          validate_procfile_v2(config)
+        else
+          config
+        end
+      end
+
       def validate_procfile_v2(config)
-        validate_command_params(config)
-        config.fetch(:commands, {}).values.each {|cmd| validate_command_params(cmd)}
+        clean_params = validate_command_params(config)
+        clean_params[:version] = config[:version]
+
+        if config[:commands]
+          clean_params[:commands] = Hash[config[:commands].map {|name, cmd| [name, validate_command_params(cmd)]}]
+        end
+
+        clean_params
       end
 
       def validate_command_params(cmd)
-        validate_runlevel(cmd[:start_on_runlevel])
-        validate_runlevel(cmd[:stop_on_runlevel])
-        validate_path(cmd[:working_directory])
-        validate_respawn(cmd[:respawn])
-        validate_digits(cmd[:count])
-        validate_digits(cmd[:kill_timeout])
+        {
+          :command => cmd[:command],
+          :start_on_runlevel => validate_runlevel(cmd[:start_on_runlevel]),
+          :stop_on_runlevel => validate_runlevel(cmd[:stop_on_runlevel]),
+          :working_directory => validate_path(cmd[:working_directory]),
+          :respawn => validate_respawn(cmd[:respawn]),
+          :count => validate_digits(cmd[:count]),
+          :kill_timeout => validate_digits(cmd[:kill_timeout])
+        }
       end
 
       def validate_respawn(options)
-        return unless options
-        validate_digits(options[:limit])
-        validate_digits(options[:interval])
+        return options unless options.is_a?(Hash)
+
+        {
+          :count => validate_digits(options[:count]),
+          :interval => validate_digits(options[:interval])
+        }
       end
 
       def validate_path(val)
@@ -68,12 +87,14 @@ module Upstart::Exporter::Options
       end
 
       def validate(val, regexp)
-        val = val.to_s
-        return if val == ""
+        str_val = val.to_s
+        return if str_val == ""
 
-        unless val =~ regexp
+        unless str_val =~ regexp
           error("value #{val} is insecure and can't be accepted")
         end
+
+        val
       end
 
   end
