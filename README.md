@@ -28,6 +28,7 @@ Configuration
 The export process is configured through the only config, `/etc/upstart-exporter.yaml`,
 which is a simple YAML file of the following format:
 
+```yaml
     ---
     run_user: www # The user under which all installed through upstart-exporter background jobs are run
     run_group: www # The group of run_user
@@ -37,9 +38,11 @@ which is a simple YAML file of the following format:
     respawn: # Controls how often job can fail and be restarted, set to false to prohibit restart after failure
       count: 10 # Number of allowed restarts in given interval
       interval: 10 # Interval in seconds
+```
 
 The config is not installed by default. If this config is absent, the default values are the following:
 
+```yaml
     helper_dir: /var/local/upstart_helpers/
     upstart_dir: /etc/init/
     run_user: service
@@ -47,6 +50,7 @@ The config is not installed by default. If this config is absent, the default va
     respawn:
       count: 5
       interval: 10
+```
 
 To give a certain user (i.e. `deployuser`) the ability to use this script, you can place the following lines into `sudoers` file:
 
@@ -78,13 +82,17 @@ Procfile v.1
 After upstart-exporter is installed and configured, you may export background jobs
 from an arbitrary Procfile-like file of the following format:
 
+```yaml
     cmdlabel1: cmd1
     cmdlabel2: cmd2
+```
 
 i.e. a file `./myprocfile` containing:
 
+```yaml
     my_tail_cmd: /usr/bin/tail -F /var/log/messages
     my_another_tail_cmd: /usr/bin/tail -F /var/log/messages
+```
 
 For security purposes, command labels are allowed to contain only letters, digits, and underscores.
 
@@ -94,6 +102,7 @@ Procfile v.2
 Another format of Procfile scripts is YAML config. A configuration script may
 look like this:
 
+```yaml
     version: 2
     start_on_runlevel: "[2345]"
     stop_on_runlevel: "[06]"
@@ -120,6 +129,7 @@ look like this:
       my_multi_tail_cmd:
         command: /usr/bin/tail -F /var/log/messages
         count: 2
+```
 
 `start_on_runlevel` and `stop_on_runlevel` are two global options that can't be
 redefined. For more information on these options look into
