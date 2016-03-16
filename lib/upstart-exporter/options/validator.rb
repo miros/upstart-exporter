@@ -57,8 +57,15 @@ module Upstart::Exporter::Options
           :working_directory => validate_path(cmd[:working_directory]),
           :respawn => validate_respawn(cmd[:respawn]),
           :count => validate_digits(cmd[:count]),
-          :kill_timeout => validate_digits(cmd[:kill_timeout])
+          :kill_timeout => validate_digits(cmd[:kill_timeout]),
+          :env => validate_env(cmd[:env])
         }
+      end
+
+      def validate_env(params)
+        return unless params
+        params.each_key {|k| reject_special_symbols(k)}
+        params
       end
 
       def validate_respawn(options)
