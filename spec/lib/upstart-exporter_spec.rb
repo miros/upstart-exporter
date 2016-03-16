@@ -47,6 +47,22 @@ commands:
       expect(File.read('/u/p-app-second_cmd.conf')).not_to include("respawn")
       expect(File.read('/u/p-app-third_cmd.conf')).to include("respawn\nrespawn limit 7 14")
     end
+
+    it 'correctly sets env variables' do
+      yaml = <<-EOS
+version: 2
+env:
+  env-key: env-value
+commands:
+  first_cmd:
+    command: ping 127.0.0.1
+      EOS
+
+      make_procfile('Procfile', yaml)
+
+      exporter.export
+      expect(File.read('/h/p-app-first_cmd.sh')).to include("env-key=env-value")
+    end
   end
 
   describe '#export' do
