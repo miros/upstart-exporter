@@ -58,7 +58,8 @@ module Upstart::Exporter::Options
           :respawn => validate_respawn(cmd[:respawn]),
           :count => validate_digits(cmd[:count]),
           :kill_timeout => validate_digits(cmd[:kill_timeout]),
-          :env => validate_env(cmd[:env])
+          :env => validate_env(cmd[:env]),
+          :log => validate_path(cmd[:log])
         }
       end
 
